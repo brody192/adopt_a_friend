@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %} Crowdfunding Page {% endblock %}
+
+{% block content %}
+<div style="font-family: 'Imprima';">
+  <div class="mx-36 my-8">
+    <h1 class="text-4xl mt-16 mb-8 font-bold">Featured</h1>
+    <div class="h-96 w-full grid grid-cols-3 rounded-xl shadow-lg" style="background-color: #f89651;">
+      <div class="bg-white h-96 w-full py-30 rounded-l-xl col-span-2" style="background-image: url('{{ featured_campaign.campaignImage.url }}'); background-size: cover;"></div>
+      <div class="my-8 mx-10 text-white text-lg relative">
+        <p class="font-bold text-3xl">{{ featured_campaign.campaignName }}</p>
+        <p class="mt-4">{{ featured_campaign.campaignDescription }}</p>
+      </div>
+    </div>  
+  </div>
+  
+  <h1 class="text-4xl mx-36 mt-16 mb-8 font-bold">Fundraising Campaigns</h1>
+    <div class="mx-36 my-14 grid grid-cols-3 gap-x-6 gap-y-6">
+      {% for campaign in campaigns %}
+      <a href="{% url 'campaign_details' campaign_id=campaign.campaignId %}">
+        <div class="relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md justify-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
+          <div class="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600" style="background-image: url('{{ campaign.campaignImage.url }}'); background-size: cover;">
+          </div>
+          <div class="p-6">
+            <h5 class="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+              {{ campaign.campaignName }}
+            </h5>
+            <p class="block font-sans text-base font-light leading-relaxed text-inherit antialiased">
+              {{ campaign.campaignPurpose }}
+            </p>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+</div>
+{% endblock %}

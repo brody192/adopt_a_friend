@@ -1,0 +1,166 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %} Sign-up {% endblock %}
+{% block scripts %} 
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+
+{% endblock %}
+
+{% block image %} <div class="relative"><img src="{% static '\image\register.jpg' %}" alt="" class="absolute top-0 left-0 transform"></div> {% endblock %}
+
+{% block content %}
+
+<div class="relative">
+    <h1 class="text-shadows px-36 pt-36" style="line-height: 6rem; font-size: 5.9rem; font-family: 'Nerko One', cursive; color: rgb(255, 255, 255); ">
+        Welcome!</h1>
+    <p class="text-shadows px-36" style="line-height: 2.5rem; font-size: 2rem; font-family: 'Imprima', sans-serif; color: rgb(120 53 15);">
+        Complete the form below <br>to create an account!</p>
+</div>
+
+<div class="relative mt-36 pb-12 rounded-3xl px-80" style="background-color: #E9E9E9;">
+    <form method="POST" action="{% url 'signup' %}" class="py-10 grid grid-cols-2 gap-x-14 gap-y-4" style="font-family: 'Imprima', sans-serif; font-size: 1.1rem;">
+        {% csrf_token %}
+
+        <!-- USER FORM -->
+        <div class="col-span-2">
+            <h1 class="font-bold mt-14 text-4xl" style="font-family: 'Imprima', sans-serif;"> Personal Information </h1>
+            <p>Fill up the form below with your personal information and desired account credentials.</p>
+            <p class="border-b-2 mb-6 mt-3 border-black"></p>
+        </div>
+        <div class="col-span-2">
+            {{form.email.label_tag}}
+            {{form.email}}
+        </div>
+        <div>
+            {{form.password1.label_tag}}
+            {{form.password1}}
+            {% if form.errors.password1 %}
+            <div class="text-red-600">
+                {% for error in form.errors.password1 %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div>
+            {{form.password2.label_tag}}
+            {{form.password2}}
+            {% if form.errors.password2 %}
+            <div class="text-red-600">
+                {% for error in form.errors.password2 %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+        </div>
+        <div>
+            {{form.first_name.label_tag}}
+            {{form.first_name}}
+            {% if form.errors.first_name %}
+            <div class="text-red-600">
+                {% for error in form.errors.first_name %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div>
+            {{form.last_name.label_tag}}
+            {{form.last_name}}
+            {% if form.errors.last_name %}
+            <div class="text-red-600">
+                {% for error in form.errors.last_name %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div>
+            {{form.gender.label_tag}}
+            {{form.gender}}
+        </div>
+        <div>
+            {{form.date_of_birth.label_tag}}
+            {{form.date_of_birth}}
+        </div>
+        <div>
+            {{form.contact_num.label_tag}}
+            {{form.contact_num}}
+            {% if form.errors.contact_num %}
+            <div class="text-red-600">
+                {% for error in form.errors.contact_num %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="col-span-2">
+            {{form.home_address.label_tag}}
+            {{form.home_address}}
+        </div>
+
+        <!-- USER PREFERENCE FORM -->
+        <div class="col-span-2">
+            <h1 class="font-bold mt-14 text-4xl" style="font-family: 'Imprima', sans-serif;"> Pet Preference </h1>
+            <p>Fill up the form below with your preference in pet.</p>
+            <p class="border-b-2 mb-6 mt-3 border-black"></p>
+        </div>
+        <div class="">
+            {{preference_form.preferredAnimalType.label_tag}}
+            {{preference_form.preferredAnimalType}}
+        </div>
+        <div class="">
+            {{preference_form.preferredBreed.label_tag}}
+            {{preference_form.preferredBreed}}
+        </div>
+        <div class="">
+            {{preference_form.preferredAge.label_tag}}
+            {{preference_form.preferredAge}}
+        </div>
+        <div class="">
+            {{preference_form.preferredGender.label_tag}}
+            {{preference_form.preferredGender}}
+        </div>
+        <div class="">
+            {{preference_form.preferredSize.label_tag}}
+            {{preference_form.preferredSize}}
+        </div>
+        <div class="">
+            {{preference_form.preferredColor.label_tag}}
+            {{preference_form.preferredColor}}
+        </div>
+        <div class="">
+            {{preference_form.preferredHealthCondition.label_tag}}
+            {{preference_form.preferredHealthCondition}}
+        </div>
+        <div class="">
+            {{preference_form.preferredPersonality.label_tag}}
+            {{preference_form.preferredPersonality}}
+        </div>
+        <div class="">
+            {{preference_form.preferredSpayedorNeutered.label_tag}}
+            {{preference_form.preferredSpayedorNeutered}}
+        </div>
+        <!-- BUTTON --> 
+        <div></div>
+        <div class="col-span-2 flex justify-end">
+        <button type="submit" class="font-semibold text-white px-9 py-3 mt-6 rounded-md bg-amber-900 hover:bg-yellow-800">
+            Submit
+        </button>
+        </div>
+    </form>
+</div>
+
+
+<script>
+    $(function() {
+        $(".datepicker").datepicker();
+    });
+</script>
+{% endblock %}

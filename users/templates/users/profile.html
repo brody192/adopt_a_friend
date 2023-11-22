@@ -1,0 +1,281 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{user.first_name}} {{user.last_name}} | Adopt A Friend</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Imprima&display=swap'); 
+        @import url('https://fonts.googleapis.com/css2?family=Imprima&family=Nerko+One&display=swap');
+        
+        .text-shadows{
+            text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+        }
+        .subtitle{
+            font-family: 'Imprima', sans-serif; 
+            text-align: center;
+        }
+        .vl {
+            border-left: 4px solid #7c340c;
+            height: 225px;
+        }
+        
+        .link-animation {
+        position: relative;
+        color: #000;
+        text-decoration: none;
+        }
+
+        .link-animation:hover {
+        color: #000;
+        }
+
+        .link-animation::before {
+        content: "";
+        position: absolute; 
+        display: block;
+        width: 100%;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #000;
+        transform: scaleX(0);
+        transform-origin: top left;
+        transition: transform 0.3s ease;
+        }
+
+        .link-animation:hover::before {
+        transform: scaleX(1);
+        }
+    </style>
+
+</head>
+<body style="background-image: url('/static/image/bg1.png'); background-size: cover;">
+    <div>
+        <nav class="py-5 px-20 flex justify-between items-center shadow-xl" style="font-family: 'Imprima', sans-serif; background-color: #f89651;">
+            <a href="/" class="relative text-xl font-bold">Adopt A Friend</a>
+            <div class="relative flex space-x-10 ml-auto">
+                <a href="{% url 'index' %}" class="py-2 text-base font-bold link-animation">Home</a>
+                <a href="{% url 'donation_page' %}" class="py-2 text-base font-bold link-animation">Donate</a>
+                <a href="{% url 'pet_page' %}" class="py-2 text-base font-bold link-animation">Our Animals</a>
+                <a href="#" class="py-2 text-base font-bold link-animation">About Us</a>
+        
+                <div class="relative flex space-x-4">
+                    {% if user.is_authenticated %}
+                        {% if user.is_staff %}
+                            <a href="{% url 'staff_dashboard' %}" class="py-2 mr-5 text-base font-bold link-animation">Dashboard</a>
+                        {% else %}
+                            <a href="{{user.get_absolute_url}}" class="py-2 mr-5 text-base font-bold link-animation">Profile</a>
+                        {% endif %}
+                        <a href="{% url 'logout' %}">
+                            <button class="shadow-lg transition ease-in-out delay-150 font-bold text-white px-7 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300 bg-amber-900">
+                                Logout
+                            </button>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}">
+                            <button class="shadow-lg transition ease-in-out delay-150 font-bold text-amber-900 px-7 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300 border-2 border-amber-900">
+                                Sign in
+                            </button>
+                        </a>
+                        <a href="{% url 'signup' %}">
+                            <button class="shadow-lg transition ease-in-out delay-150 font-bold text-white px-7 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300 bg-amber-900 border-2 border-amber-900">
+                                Sign up
+                            </button>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+        
+    </div>
+
+    <div class="bg-white shadow-lg mt-12 mx-36 px-20 py-8 grid grid-cols-4 gap-0 rounded-2xl">
+        <div class="col-span-1">
+            <img class="w-56 h-56 rounded-full" src="{{ user.profile.image.url }}">
+        </div>
+        <div class="col-span-2 pl-0" style="font-family: Imprima;">
+            <h1 class=" font-bold pl-6" style="font-family: Imprima; font-size: 4rem;">
+                {{user.first_name}} {{user.last_name}}
+            </h1>
+            <p class="text-xl pl-6">{{user.email}}</p>
+            <p class="text-xl pl-6">{{user.contact_num}}</p>
+            <p class="text-xl pl-6">{{user.home_address}}</p>
+        </div>
+        <div class="col-span-1 flex justify-end">
+            <a href="{{user.get_absolute_url_for_update}}">
+                <button class="shadow-lg transition ease-in-out delay-150 font-semibold text-white px-9 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300 bg-amber-900">
+                    Edit Profile
+                </button>
+             </a>
+        </div>
+    </div>
+    
+    <div class="mt-12 mb-12 mx-36 px-20 py-8 grid grid-cols-4 gap-x-16 gap-y-4 rounded-2xl bg-white shadow-lg"  style="font-family: Imprima;">
+        <div class="col-span-1 border-lg">
+            <h1 class=" font-bold text-lg">Personal Information</h1>
+            <p class="my-3 border-t-2 border-amber-900"></p>
+    
+            <div class="grid grid-cols-2 px-3" >
+                <div class="col-span-1">
+                    <p>Age:</p>
+                    <p>Birthdate:</p>
+                    <p>Gender:</p>
+                </div>
+                <div class="col-span-1">
+                    <p class="">{{user.age}}</p>
+                    <p class="">{{user.date_of_birth}}</p>
+                    <p class="">{{user.gender}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-2">
+            <h1 class=" font-bold text-lg">About Me</h1>
+            <p class="my-3 border-t-2 border-amber-900"></p>
+            <div class="px-3">
+                <p class="text-justify">{{user.user_bio}}</p>
+            </div>
+           
+            <h1 class="pt-5  font-bold text-lg">Pet Preference</h1>
+            <p class="my-3 border-t-2 border-amber-900"></p>
+            <div class="px-3 grid grid-cols-3 my-3 gap-x-5">
+                <p class="col-span-2">Animal Type:</p>
+                <p class="flex justify-end">{{preference.preferredAnimalType}}</p>
+                <p class="col-span-2">Breed:</p>
+                <p class="flex justify-end">{{preference.preferredBreed}}</p>
+                <p class="col-span-2">Age:</p>
+                <p class="flex justify-end">{{preference.preferredAge}}</p>
+                <p class="col-span-2">Pet Gender:</p>
+                <p class="flex justify-end">{{preference.preferredGender}}</p>
+                <p class="col-span-2">Pet Size: </p>
+                <p class="flex justify-end">{{preference.preferredSize}}</p>
+                <p class="col-span-2">Pet Color: </p>
+                <p class="flex justify-end">{{preference.preferredColor}}</p>
+                <p class="col-span-2">Preference in Neutered/Spayed Pet:</p>
+                <p class="flex justify-end">{{preference.preferredSpayedorNeutered}}</p>
+                <p class="col-span-2">Health Condition:</p>
+                <p class="flex justify-end">{{preference.preferredHealthCondition}}</p>
+            </div>
+        </div>
+
+        <div class="col-span-1  font-bold">
+            <h1 class="text-lg">Messages</h1>
+            <p class="my-3 border-t-2 border-amber-900"></p>
+        </div>
+        
+        <div class="col-span-4">
+            <h1 class="pt-5 font-bold text-lg">Applications</h1>
+        <p class="my-3 border-t-2 border-amber-900"></p>
+        {% for application in applications %}
+        <div class="h-52 w-full grid grid-cols-3 rounded-md shadow-lg my-10" style="background-color: #f89651;">
+            <div class="bg-white h-full w-full py-30 rounded-l-md" style="background-image: url('{{ application.pet.petimage_set.first.petImage.url }}'); background-size: cover;">
+                {% if application.status == "Pending" %}
+                <div class="w-32 my-2.5 mx-2.5">
+                    <div class="bg-yellow-500 rounded-md text-gray-600 py-2 px-5">
+                        <h1 class="text-white font-bold text-center">Pending</h1>
+                    </div>
+                </div>
+            {% elif application.status == "On Hold" %}
+                <div class="w-32 my-2.5 mx-2.5">
+                    <div class="bg-blue-500 rounded-md text-gray-600 py-2 px-5">
+                        <h1 class="text-white font-bold text-center">On Hold</h1>
+                    </div>
+                </div>
+            {% elif application.status == "Accepted" %}
+                <div class="w-32 my-2.5 mx-2.5">
+                    <div class="bg-green-700 rounded-md text-gray-600 py-2 px-5">
+                        <h1 class="text-white font-bold text-center">Accepted</h1>
+                    </div>
+                </div>
+            {% elif application.status == "Rejected" %}
+                <div class="w-32 my-2.5 mx-2.5">
+                    <div class="bg-red-500 rounded-md text-gray-600 py-2 px-5">
+                        <h1 class="text-white font-bold text-center">Rejected</h1>
+                    </div>
+                </div>
+            {% elif application.status == "Interviewing" %}
+                <div class="w-32 my-2.5 mx-2.5">
+                    <div class="bg-purple-500 rounded-md text-gray-600 py-2 px-5">
+                        <h1 class="text-white font-bold text-center">Interviewing</h1>
+                    </div>
+                </div>
+            {% elif application.status == "Evaluating" %}
+                <div class="w-32 my-2.5 mx-2.5">
+                    <div class="bg-indigo-500 rounded-md text-gray-600 py-2 px-5">
+                        <h1 class="text-white font-bold text-center">Evaluating</h1>
+                    </div>
+                </div>
+            {% elif application.status == "Completed" %}
+                <div class="w-32 my-2.5 mx-2.5">
+                    <div class="bg-gray-500 rounded-md text-gray-600 py-2 px-5">
+                        <h1 class="text-white font-bold text-center">Completed</h1>
+                    </div>
+                </div>
+            {% endif %}
+            </div>
+            <div class="my-8 mx-8 text-white grid grid-cols-2 col-span-2 text-lg">
+                <div class="">
+                    <p><b>Pet:</b></p>
+                    <p>&emsp;&emsp;{{application.pet.petName}}</p>
+                </div>
+                <div class="">
+                    <p><b>Online Interview Date: </b></p>
+                    <p>&emsp;&emsp;{{application.interviewDate}}</p>
+                </div>
+                <div class="">
+                    <p><b>Online Interview Time: </b></p>
+                    <p>&emsp;&emsp;{{application.interviewTime}}</p>
+                </div>
+                <div class="flex justify-end">
+                    <div class="pt-10">
+                        <div class="flex gap-2">
+                            <div class="py-2 px-3 bg-white rounded-md text-gray-600 hover:scale-110 duration-200 hover:cursor-pointer">
+                                <a href="{% url 'generate_application_report' application.applicationId %}">
+                                    <div class="flex gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="m12 16l-5-5l1.4-1.45l2.6 2.6V4h2v8.15l2.6-2.6L17 11l-5 5Zm-8 4v-5h2v3h12v-3h2v5H4Z"/>
+                                        </svg>
+                                        <button class="text-sm text-green-700">Download</button> 
+                                    </div>
+                                </a>
+                            </div>
+                
+                            {% if application.status == "Interviewing" and application.modeOfInterview == "Online" %}
+                            <div class="py-2 px-3 bg-white rounded-md text-gray-600 hover:scale-110 duration-200 hover:cursor-pointer">
+                                <a href="{% url 'lobby' applicationId=application.applicationId %}">
+                                    <div class="flex gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6" viewBox="0 0 256 256">
+                                            <path fill="currentColor" d="M212 82a26 26 0 1 0 26 26a26 26 0 0 0-26-26Zm0 40a14 14 0 1 1 14-14a14 14 0 0 1-14 14ZM70 108a26 26 0 1 0-26 26a26 26 0 0 0 26-26Zm-26 14a14 14 0 1 1 14-14a14 14 0 0 1-14 14Zm48-36a26 26 0 1 0-26-26a26 26 0 0 0 26 26Zm0-40a14 14 0 1 1-14 14a14 14 0 0 1 14-14Zm72 40a26 26 0 1 0-26-26a26 26 0 0 0 26 26Zm0-40a14 14 0 1 1-14 14a14 14 0 0 1 14-14Zm22.15 104.61a37.32 37.32 0 0 1-17.82-22.33a42 42 0 0 0-80.66 0a37.26 37.26 0 0 1-17.77 22.3A38 38 0 0 0 88 222a37.58 37.58 0 0 0 14.76-3a66.14 66.14 0 0 1 50.41 0a37.66 37.66 0 0 0 14.83 3a38 38 0 0 0 18.15-71.39ZM168 210a25.93 25.93 0 0 1-10.21-2.08a78.15 78.15 0 0 0-59.65 0a26 26 0 0 1-22.46-46.82a49.28 49.28 0 0 0 23.51-29.48a30 30 0 0 1 57.62 0a49.27 49.27 0 0 0 23.57 29.5A26 26 0 0 1 168 210Z"/>
+                                        </svg>                                            
+                                        <button class="text-sm text-green-700">Paw Link</button> 
+                                    </div>
+                                </a>
+                            </div>
+                            {% endif %}
+
+                            {% if application.status == "Completed"%}
+                            <div class="py-2 px-3 bg-white rounded-md text-gray-600 hover:scale-110 duration-200 hover:cursor-pointer">
+                                <a href="{% url 'chat' applicationId=application.applicationId %}">
+                                    <div class="flex gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6" viewBox="0 0 256 256">
+                                            <path fill="currentColor" d="M212 82a26 26 0 1 0 26 26a26 26 0 0 0-26-26Zm0 40a14 14 0 1 1 14-14a14 14 0 0 1-14 14ZM70 108a26 26 0 1 0-26 26a26 26 0 0 0 26-26Zm-26 14a14 14 0 1 1 14-14a14 14 0 0 1-14 14Zm48-36a26 26 0 1 0-26-26a26 26 0 0 0 26 26Zm0-40a14 14 0 1 1-14 14a14 14 0 0 1 14-14Zm72 40a26 26 0 1 0-26-26a26 26 0 0 0 26 26Zm0-40a14 14 0 1 1-14 14a14 14 0 0 1 14-14Zm22.15 104.61a37.32 37.32 0 0 1-17.82-22.33a42 42 0 0 0-80.66 0a37.26 37.26 0 0 1-17.77 22.3A38 38 0 0 0 88 222a37.58 37.58 0 0 0 14.76-3a66.14 66.14 0 0 1 50.41 0a37.66 37.66 0 0 0 14.83 3a38 38 0 0 0 18.15-71.39ZM168 210a25.93 25.93 0 0 1-10.21-2.08a78.15 78.15 0 0 0-59.65 0a26 26 0 0 1-22.46-46.82a49.28 49.28 0 0 0 23.51-29.48a30 30 0 0 1 57.62 0a49.27 49.27 0 0 0 23.57 29.5A26 26 0 0 1 168 210Z"/>
+                                        </svg>                                            
+                                        <button class="text-sm text-green-700">Contact Staff</button> 
+                                    </div>
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+</html>

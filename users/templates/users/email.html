@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request New Link | Adopt A Friend</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Imprima&display=swap'); 
+        @import url('https://fonts.googleapis.com/css2?family=Imprima&family=Nerko+One&display=swap');
+        
+        .text-shadows{
+            text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+        }
+        .subtitle{
+            font-family: 'Imprima', sans-serif; 
+            text-align: center;
+        }
+    </style>
+</head>
+<body style="background-color: #e39759;">
+    <div class="bg-white py-10 px-28 subtitle rounded-lg" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="flex justify-center">
+            <img src="https://hollysfurandfeatheredfriends.files.wordpress.com/2020/07/waving_pets-removebg-preview.png" alt="" class="" style="width: 60%; height: auto;"><br>
+        </div>
+        <h1 class="text-center text-shadows" style="font-family: 'Nerko One', sans-serif; font-size: 2.8rem; text-align: center; color:  #e39759;">
+            Greetings!
+        </h1>
+        <p class="pt-2 subtitle">Hi, hooman! You received this mail because you attempted to make account on our website, 
+            Please click the button below to confirm the email and activate your account. 
+        </p>
+        <div class="mt-6">
+            <a href="{{link}}">
+                <button class="px-20 font-semibold text-white py-3 rounded-md bg-amber-900 hover:bg-yellow-800" type="submit">Verify Email</button>
+            </a>
+        </div>
+
+        <p class="pt-8 text-gray-400" style="font-size: smaller;">
+            This mail machine generated. <br>Do not reply to this mail
+        </p>
+    </div>
+</body>
+</html>

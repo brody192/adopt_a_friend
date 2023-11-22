@@ -1,0 +1,78 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %} Application {% endblock %}
+
+{% block content %}
+
+<div class="mx-64 mt-10 mb-20 py-12 px-16 bg-white rounded-3xl shadow-lg">
+  <h1 class=" text-black text-5xl text-center pb-6" style="font-family: 'Imprima'; font-weight: bold;">Application Form</h1>
+  <form action="" method="POST" enctype="multipart/form-data" class="grid grid-cols-2 gap-x-10 gap-y-4" style="font-family: 'Imprima'; font-size: 18px;">
+    {% csrf_token %}
+    <div class="col-span-2">
+      <h1 class=" text-black text-2xl" style="font-family: 'Imprima'; font-weight: bold;">Personal Information</h1>
+      <p class="text-base italic"> Fill up the fields with required personal information. </p>
+      <p class="border-b-2 mb-4 mt-2 border-black"></p>
+    </div>
+    <div>
+      {{ application_form.adopteeFirstName.label_tag }}
+      {{ application_form.adopteeFirstName }}
+    </div>
+    <div>
+      {{ application_form.adopteeLastName.label_tag }}
+      {{ application_form.adopteeLastName }}
+    </div>
+    <div>
+      {{ application_form.adopteeHomeAddress.label_tag }}
+      {{ application_form.adopteeHomeAddress }}
+    </div>
+    <div>
+      {{ application_form.adopteeContactNum.label_tag }}
+      {{ application_form.adopteeContactNum }}
+    </div>
+    <div>
+      {{ application_form.preferredModeOfInterview.label_tag }}
+      {{ application_form.preferredModeOfInterview }}
+    </div>
+    <div class="col-span-2">
+      <h1 class=" text-black text-2xl mt-2" style="font-family: 'Imprima'; font-weight: bold;">House Pictures</h1>
+      <p class="text-base italic"> Provide five (5) pictures of your house where the pet are going to stay. </p>
+      <p class="border-b-2 mb-4 mt-2 border-black"></p>
+    </div>
+    <!-- Display House Picture Formset -->
+    {{ house_picture_formset.management_form }}
+    {% for form in house_picture_formset.forms %}
+      <div>
+        {{ form.as_p }}
+      </div>
+    {% endfor %}
+
+    <div class="col-span-2 py-4">
+      <h1 class=" text-black text-2xl mt-2" style="font-family: 'Imprima'; font-weight: bold;">Valid IDs</h1>
+      <p class="text-base italic"> Provide two (2) valid IDs. </p>
+      <p class="border-b-2 mt-2 border-black"></p>
+    </div>
+    <!-- Display ID Picture Formset -->
+    {{ id_picture_formset.management_form }}
+    {% for form in id_picture_formset.forms %}
+        {{ form.as_p }}
+    {% endfor %}
+
+    <div class="col-span-2 py-4">
+      <h1 class=" text-black text-2xl mt-2" style="font-family: 'Imprima'; font-weight: bold;">Condo Agreement</h1>
+      <p class="text-base italic"> If you live in a condo, please provide a letter or contract that allows you to have a pet in your home. Must be in PDF.</p>
+      <p class="border-b-2 mt-2 border-black"></p>
+    </div>
+    <!-- Display Condo Agreement Form -->
+    {{ condo_agreement_form.as_p }}
+    
+    <div></div><div></div>
+    <!-- Add a submit button -->
+    <div class="flex justify-end">
+      <button type="submit" class="font-semibold text-white px-16 py-3 mt-6 rounded-md bg-amber-900 hover:bg-yellow-800">
+          Submit Application
+      </button>
+  </div>
+  </form>
+</div>
+{% endblock %}

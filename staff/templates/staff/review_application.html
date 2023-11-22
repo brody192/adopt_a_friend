@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Imprima&display=swap'); 
+        @import url('https://fonts.googleapis.com/css2?family=Imprima&family=Nerko+One&display=swap');
+        
+        .text-shadows{
+            text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+        }
+        .subtitle{
+            font-family: 'Imprima', sans-serif; 
+            text-align: center;
+        }
+        .vl {
+            border-left: 4px solid #7c340c;
+            height: 225px;
+        }
+    </style>
+    <title>Review Application | Adopt A Friend</title>
+</head>
+
+<body style="background-image: url('/static/image/staffbg.png'); background-size: cover;">
+    <a href="javascript:history.back()" class="text-black text-2xl font-bold ml-10 my-14" style="font-family: 'Imprima';">
+        <button class="mt-10 ml-10 transition ease-in-out delay-150 font-semibold px-8 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="Black" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+              </svg>
+        </button>
+     </a>
+    <div class="mx-64 mt-10 mb-20 py-12 px-16 bg-white rounded-3xl shadow-lg">
+        <div class="flex justify-between">
+            <h1 class=" text-black text-5xl pb-3" style="font-family: 'Imprima'; font-weight: bold;">Review Application</h1>
+            
+        </div>
+        <p class="border-b-2 mb-6 mt-1 border-black"></p>
+        <div class="grid grid-cols-2 gap-x-10 gap-y-4" style="font-family: 'Imprima'; font-size: 18px;">
+            <div>
+                <h1>Name of Applicant:</h1>
+                <h1>&emsp;&emsp;&emsp; {{application.adopteeFirstName}} {{application.adopteeLastName}}</h1>
+            </div>
+            <div>
+                <h1>Contact Number:</h1>
+                <h1>&emsp;&emsp;&emsp; {{application.adopteeContactNum}}</h1>
+            </div>
+            <div>
+                <h1>Home Address:</h1>
+                <h1>&emsp;&emsp;&emsp; {{application.adopteeHomeAddress}}</h1>
+            </div>
+            <div>
+                <h1>Desired Pet To Adopt:</h1>
+                <h1>&emsp;&emsp;&emsp; {{application.pet.petName}}</h1>
+            </div>
+            <div>
+                <h1>Current Adoption Status:</h1>
+                <h1>&emsp;&emsp;&emsp; {{application.status}}</h1>
+            </div>
+            <div>
+                <h1>Download Complete Application:</h1>
+                &emsp;&emsp;&emsp;<a href="{% url 'generate_application_report' application_id=application.applicationId %}" download>Download PDF</a>
+            </div>
+        </div>
+
+        <p class="border-b-2 my-10 border-black"></p>
+        <form action="" method="POST" enctype="multipart/form-data" class="grid grid-cols-2 gap-x-10 gap-y-4" style="font-family: 'Imprima'; font-size: 18px;">
+            {% csrf_token %}
+            <div>
+                {{form.interviewDate.label_tag}}
+                {{form.interviewDate}}
+            </div>
+            <div>
+                {{form.interviewTime.label_tag}}
+                {{form.interviewTime}}
+            </div>
+            <div>
+                {{form.inPersonVisitDate.label_tag}}
+                {{form.inPersonVisitDate}}
+            </div>
+            <div>
+                {{form.inPersonVisitTime.label_tag}}
+                {{form.inPersonVisitTime}}
+            </div>
+            <div>
+                {{form.status.label_tag}}
+                {{form.status}}
+            </div>
+            <div>
+                {{form.modeOfInterview.label_tag}}
+                {{form.modeOfInterview}}
+            </div>
+            <div class="col-span-2">
+                {{form.staffComment.label_tag}}
+                {{form.staffComment}}
+            </div>
+            <div></div>
+            <div class="flex justify-end">
+                <button onclick="confirmAction()" type="submit" class="font-semibold text-white px-16 py-3 mt-6 rounded-md bg-amber-900 hover:bg-yellow-800" onclick="confirmAction()">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+
+
+<script>
+    function confirmAction() {
+        var result = confirm("Are you sure you want to perform this action?");
+        if (result == true)
+        {
+            window.location.href = "{% url 'staff_pet_dashboard' %}";
+        }
+        else {
+            
+        }
+        console.log(result)
+    }
+</script>
+
+</html>

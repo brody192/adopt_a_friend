@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request New Link | Adopt A Friend</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Imprima&display=swap'); 
+        @import url('https://fonts.googleapis.com/css2?family=Imprima&family=Nerko+One&display=swap');
+        
+        .text-shadows{
+            text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+        }
+        .subtitle{
+            font-family: 'Imprima', sans-serif; 
+            text-align: center;
+        }
+    </style>
+</head>
+<body style="background-color: #e39759;">
+    <div class="bg-white py-16 px-36 subtitle rounded-lg" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="flex justify-center">
+            <img src="{% static '\image\cats.png' %}" alt="" class="" style="width: 100%; height: auto;"><br>
+        </div>
+        <h1 class="text-center mt-8 mb-2" style="font-family: 'Imprima', sans-serif; font-weight: bolder; font-size: 1.5rem; text-align: center; color: rgb(120 53 15);">Resend Verification Link</h1>
+        <form method='POST' >
+            {% csrf_token %}
+            
+            <fieldset>
+                {{form.email}}
+            </fieldset>
+    
+            <div style="margin-top: 50px;">
+                <button class="w-full font-semibold text-white py-3 rounded-md bg-amber-900 hover:bg-yellow-800" type="submit">Request</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

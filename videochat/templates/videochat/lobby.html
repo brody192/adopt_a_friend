@@ -1,0 +1,50 @@
+{% extends 'videochat/base.html' %}
+{% load static %}
+{% block title %} Lobby {% endblock title %}
+{% block content %}
+<main>
+    <div id="form-container">
+        <div></div>
+
+        <div>
+            <h1 class="py-4 flex text-4xl justify-center font-bold" style="font-family: 'Imprima';"> Paw Link </h1>
+            <p class="text-center"> An online video chat for online interviews and post-adoption consultation </p>
+        </div>
+
+        <form id="form" style="font-family: 'Imprima', sans-serif;">
+            <div class="flex justify-center pt-4">
+                <input class="rounded-xl px-8" type="text" name="room" value="{{ application.applicationId }}" readonly style="text-transform: uppercase;">
+            </div>
+            <div class="flex justify-center py-4">
+                <button type="submit" class="px-24 py-2 border rounded-xl text-white shadow-inner transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-100 duration-300 bg-amber-900">
+                    Join
+                </button>
+            </div>
+        </form>
+    </div>
+
+</main>
+
+<script type="text/javascript">
+    let form = document.getElementById('form')
+
+    let handleSubmit = async (e) => {
+        e.preventDefault()
+        let room = e.target.room.value.toUpperCase()
+        
+        let response = await fetch(`/get_token/?channel=${room}`)
+        let data = await response.json()
+
+        let UID = data.uid
+        let token = data.token
+
+        sessionStorage.setItem('UID', UID)
+        sessionStorage.setItem('token', token)
+        sessionStorage.setItem('room', room)
+
+        window.open('/room/','_self')
+    }
+
+    form.addEventListener('submit', handleSubmit)
+</script>
+{% endblock content %}

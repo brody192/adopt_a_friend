@@ -1,0 +1,64 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %} Home {% endblock %}
+
+{% block image %} <img src="{% static '\image\home.png' %}" alt="" class="absolute">  {% endblock %}
+
+{% block content %}
+
+<div class="relative text-left px-20 py-20">
+    <h1 class="text-shadows" style="font-size: 8rem; font-family: 'Nerko One', cursive; color: rgb(120 53 15); ">
+        Join Us!</h1>
+    <p class="text-shadows" style="line-height: 12px; font-size: 2.8rem; font-family: 'Imprima', sans-serif; color: rgb(120 53 15);">
+        Adopt and Give Them Home</p>
+    <a href="{% url 'signup' %}">
+        <button class=" text-white mt-12 px-8 py-2 rounded-md bg-amber-900 hover:bg-yellow-800" style="font-family: 'Imprima', sans-serif;">
+            Register now
+        </button>
+    </a>
+</div>
+
+<section class="px-20 md:mt-10 xl:mt-96">
+    <div class="grid grid-cols-2">
+        <div class="col-span-1">
+            <h1 class="text-shadows" style="font-size: 46px; font-family: 'Nerko One', cursive; color: rgb(120 53 15); ">ADOPT ME</h1>
+        </div>
+        <div class="col-span-1 text-right">
+            <a href="/" class="text-amber-900 hover:text-yellow-800">See More</a>
+        </div>
+    </div>
+
+    <!-- CARDS -->
+    <div>
+        <div class="grid grid-cols-3">
+            <div class="py-60 mx-8 mt-3 mb-6 shadow-lg bg-white col-span-1 border-2 rounded-xl">
+                <!-- CONTENT HERE -->
+            </div>
+            <div class="py-60 mx-8 mt-3 mb-6 shadow-lg bg-white col-span-1 border-2 rounded-xl">
+                <!-- CONTENT HERE -->
+            </div>
+            <div class="py-60 mx-8 mt-3 mb-6 shadow-lg bg-white col-span-1 border-2 rounded-xl">
+                <!-- CONTENT HERE -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mt-16 px-20 pb-12" style="background-color: #e39759;">
+    <h1 class="text-shadows pt-7 pb-5" style="font-size: 46px; font-family: 'Nerko One', cursive; color: rgb(120 53 15); "> LEARN THEIR STORIES </h1>
+    <div class="py-60 shadow-lg bg-white rounded-xl">
+        <!-- CARD -->
+    </div>
+</section>
+
+<section>
+    
+</section>
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %} Verify Email {% endblock %}
+
+{% block content %} 
+
+<div class="flex justify-center mt-28">
+    <img src="{% static '\image\dog_mail2.png' %}" alt="" class="" style="width: 10%; height: auto;"><br>
+</div>
+
+<div class="flex justify-center" style="font-family: 'Imprima', sans-serif; font-weight: bolder; font-size: 2.3rem; text-align: center; color: rgb(120 53 15);">
+    <p>Welcome to our Community!</p>  
+</div>
+
+<div class="flex justify-center subtitle">
+    <h1>A verification link has been sent to your provided email.</h1>
+</div>
+
+<div class="flex justify-center subtitle">
+    <p>Please check your inbox and click the link to complete the registration process.</p>
+</div>
+
+<div class="flex justify-center subtitle">
+    <a href="{% url 'request-new-link-from-email' %}">
+        <button class="font-semibold text-white px-9 py-2 mt-9 rounded-md bg-amber-900 hover:bg-yellow-800"> Resend Email </button>
+    </a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% load static %}
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room | Adopt A Friend</title>
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+    {% tailwind_css %}
+</head>
+<body style="background-image: url('/static/image/staffbg.png'); background-size: cover;">
+    <main>
+        <section id="room-name-wrapper" class="pt-5">
+            <p class="font-bold"><span id="room-name"></span></p>
+        </section>
+        
+        <section class="pt-8" id="video-streams"></section>
+    
+        <section class="flex justify-center pb-5 pt-8">
+            <div class="icon-wrapper">
+                <img class="cursor-pointer p-3 mr-10 rounded-lg w-auto h-16 btn-shadow bg-white" id="mic-btn" src="{% static 'image/microphone.png' %}" alt="">
+            </div>
+            <div class="icon-wrapper">
+                <img class="cursor-pointer p-3 mr-10 rounded-lg w-auto h-16 btn-shadow bg-white" id="camera-btn" src="{% static 'image/video.png' %}" alt="">
+            </div>
+            <div class="icon-wrapper">
+                <img class="cursor-pointer p-3 rounded-lg w-auto h-16 btn-shadow" id="leave-btn" src="{% static 'image/leave.png' %}" alt="">
+            </div>
+        </section>
+    </main>
+</body>
+</html>
+
+<script type="text/javascript" src="{% static 'assets/AgoraRTC_N-4.18.2.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/streams.js' %}"></script>

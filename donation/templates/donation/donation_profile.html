@@ -1,0 +1,67 @@
+{% extends 'main/base.html' %}
+{% load social_share %}
+
+{% block title %} {{ campaign.campaignName }} {% endblock %}
+
+{% block content %} 
+
+<div class="mx-56 my-14">
+    <div class="h-96 w-full" style="background-image: url('{{ campaign.campaignImage.url }}'); background-size: cover;">
+
+    </div>
+</div>
+
+
+<div class="mx-56 mt-12 mb-14" style="font-family: 'Imprima';">
+    <div class="grid grid-cols-6 gap-x-4 gap-y-6">
+        <div class="bg-white rounded-lg col-span-4 shadow-lg px-10 pt-10 pb-4 self-start">
+            <div class="flex justify-between items-center">
+                <h1 class="text-5xl font-bold">{{ campaign.campaignName }}</h1>
+            </div>
+            <p class="mt-5 border-b-2 border-gray-200"></p></p>
+            <h1 class="text-lg py-4">Description:</h1>
+            <h1 class="text-lg py-4">{{ campaign.campaignDescription }}</h1>
+            <p class="mt-5 border-b-2 border-gray-200"></p></p>
+            <h1 class="text-lg py-4">Purpose of the Fundraiser:</h1>
+            <h1 class="text-lg py-4">{{ campaign.campaignPurpose }}</h1>
+            <p class="mt-5 border-b-2 border-gray-200"></p></p>
+            <h1 class="text-lg py-4"> Messages: </h1>
+            <!-- Add comments logic or display here -->
+        </div>
+        <div class="bg-white rounded-lg col-span-2 shadow-lg px-10 py-10 self-start">
+            <div class="flex-col justify-center">
+                <h1 class="text-center text-7xl text-amber-900" style="font-family: 'Nerko One';"> Goal</h1>
+                <h1 class="text-center text-4xl ">{% if total_donated > 0 %}{{ total_donated }}{% else %}0{% endif %} Pesos</h1>
+                <p class="text-center text-xs">of {{ campaign.campaignGoal|default:0|floatformat:0 }} pesos</p>
+                {% if recent_donors %}
+                <div class="text-lg mt-2 text-white">Recent Donors:</div>
+                {% for donor in recent_donors %}
+                <div class="flex items-center mt-3">
+                    <img class="w-10 h-10 rounded-full" src="{{ donor.user.profile.image.url }}" alt="{{ donor.user.first_name }}'s Avatar">
+                    <p class="ml-3 text-white">{{ donor.user.first_name }} donated ₱ {{ donor.donationAmount|floatformat:0 }}</p>
+                </div>
+                {% endfor %}
+                {% endif %}
+                <div class="mt-8 mb-3">
+                    <a href="{% url 'donate' campaign_id=campaign.campaignId %}">
+                        <button type="button" class="w-full shadow-inner transition ease-in-out delay-150 font-semibold text-white px-5 py-2 rounded-xl hover:-translate-y-1 hover:scale-100 duration-300 bg-amber-900">
+                            Donate
+                        </button>
+                    </a>
+                </div>
+                <div class="">
+                    <button type="" class="w-full shadow-inner transition ease-in-out delay-150 font-semibold text-amber-900 px-5 py-2 rounded-xl hover:-translate-y-1 hover:scale-100 duration-300 border-2 border-amber-900">
+                        Share
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block script %} 
+
+{% endblock %}

@@ -1,0 +1,165 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %} Pets {% endblock %}
+
+{% block scripts %} 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="my-28" style="font-family: 'Imprima';">
+    <div class="grid grid-cols-5 mx-auto max-w-screen-xl justify-center gap-x-10 gap-y-8">
+        <div class="mt-3 shadow-lg col-span-5">
+            <div class="mx-auto max-w-screen-xl h-20 rounded-xl flex justify-between" style="background-color: #f89651;">
+                <h1 class="py-7 pl-8 text-xl text-white text-shadows font-bold">Adopt and Give Them Home</h1>
+                <form method="GET" action="{% url 'pet_page' %}" class="py-5 pr-6">
+                    <input type="text" name="q" placeholder="Search pets..." class="p-2 border border-gray-300 rounded">
+                    <button type="submit" class="shadow-inner transition ease-in-out delay-150 font-semibold text-white px-5 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300 bg-amber-900">Search</button>
+                </form>
+            </div>
+        </div>
+        
+        {% if request.GET.q %}
+        {% if pets %}
+        {% for pet in pets %}
+            <div class="w-60 h-auto p-3 flex flex-col rounded-2xl shadow-lg mt-3" style="background-color: #f89651;" id="{{pet.petId}}">
+                <div class="h-48 bg-white rounded-xl" style="background-image: url('{{ pet.petimage_set.first.petImage.url }}'); background-size: cover;"></div>
+                <div class="flex flex-col gap-2">
+                    <div class="flex flex-row justify-between pt-2">
+                        <div class="flex flex-col">
+                            <span class="text-xl font-bold text-white">{{pet.petName}}</span>
+                        </div>
+                        <span class="font-bold text-white">{{pet.animalType}}</span>
+                    </div>
+                    <div class="text-white">
+                        <p class="text-justify">{{pet.petDescription|truncatechars:50}}</p>
+                    </div>
+                    <div class="flex justify-end">
+                        <a href="{% url 'pet_profile' pet.slug pet.petId %}">
+                            <button type="" class="shadow-inner transition ease-in-out delay-150 font-semibold text-white px-5 py-2 rounded-md hover:-translate-y-1 hover:scale-100 duration-300 bg-amber-900">Adopt Me</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-3xl font-bold col-span-5">No results found for the search query.</p>
+    {% endif %}
+        {% else %}
+
+            {% if user.is_authenticated %}
+                {% if recommended_pets %}
+                    <div class="col-span-5">
+                        <h1 class="text-4xl font-bold">Recommended For You</h1>
+                    </div>
+                    {% for pet in recommended_pets%}
+                        <div class="w-60 h-auto p-3 flex flex-col rounded-2xl shadow-lg mt-3" style="background-color: #f89651;" id="{{pet.petId}}">
+                            <div class="h-48 bg-white rounded-xl" style="background-image: url('{{ pet.petimage_set.first.petImage.url }}'); background-size: cover;"></div>
+                            <div class="flex flex-col gap-2">
+                                <div class="flex flex-row justify-between pt-2">
+                                    <div class="flex flex-col">
+                                    <span class="text-xl font-bold text-white">{{pet.petName}}</span>
+                                    </div>
+                                    <span class="font-bold  text-white">{{pet.animalType}}</span>
+                                </div>
+                                <div class="text-white">
+                                    <p class="text-justify">{{pet.petDescription|truncatechars:50}}</p>
+                                </div>
+                                <div class="flex justify-end"> <!-- Use flex utility class to align items to the end -->
+                                    <a href="{% url 'pet_profile' pet.slug pet.petId %}">
+                                        <button type="" class="shadow-inner transition ease-in-out delay-150 font-semibold text-white px-5 py-2 rounded-md hover:-translate-y-1 hover:scale-100 duration-300 bg-amber-900">Adopt Me</button>
+                                    </a>
+                                </div>             
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+            <div class="col-span-5 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 w-12 h-12" viewBox="0 0 256 256"><path fill="currentColor" d="m239.71 125l-16.42-88a16 16 0 0 0-19.61-12.58l-.31.09L150.85 40h-45.7L52.63 24.56l-.31-.09a16 16 0 0 0-19.61 12.58L16.29 125a15.77 15.77 0 0 0 9.12 17.52a16.26 16.26 0 0 0 6.71 1.48a15.48 15.48 0 0 0 7.88-2.16V184a40 40 0 0 0 40 40h96a40 40 0 0 0 40-40v-42.15a15.5 15.5 0 0 0 7.87 2.16a16.31 16.31 0 0 0 6.72-1.47a15.77 15.77 0 0 0 9.12-17.54ZM32 128l16.43-88L90.5 52.37Zm144 80h-40v-12.69l13.66-13.65a8 8 0 0 0-11.32-11.32L128 180.69l-10.34-10.35a8 8 0 0 0-11.32 11.32L120 195.31V208H80a24 24 0 0 1-24-24v-60.89L107.92 56h40.15L200 123.11V184a24 24 0 0 1-24 24Zm48-80l-58.5-75.63L207.57 40L224 128Zm-120 12a12 12 0 1 1-12-12a12 12 0 0 1 12 12Zm72 0a12 12 0 1 1-12-12a12 12 0 0 1 12 12Z"/></svg>
+                <h1 class="text-4xl font-bold">Our Dogs</h1>
+            </div>
+            {% for pet in pets %}
+                {% if pet.animalType == "Dog"%}
+                    <div class="w-60 h-auto p-3 flex flex-col rounded-2xl shadow-lg mt-3" style="background-color: #f89651;" id="{{pet.petId}}">
+                        <div class="h-48 bg-white rounded-xl" style="background-image: url('{{ pet.petimage_set.first.petImage.url }}'); background-size: cover;"></div>
+                        <div class="flex flex-col gap-2">
+                            <div class="flex flex-row justify-between pt-2">
+                                <div class="flex flex-col">
+                                <span class="text-xl font-bold text-white">{{pet.petName}}</span>
+                                </div>
+                                <span class="font-bold  text-white">{{pet.animalType}}</span>
+                            </div>
+                            <div class="text-white">
+                                <p class="text-justify">{{pet.petDescription|truncatechars:50}}</p>
+                            </div>
+                            <div class="flex justify-end"> <!-- Use flex utility class to align items to the end -->
+                                <a href="{% url 'pet_profile' pet.slug pet.petId %}">
+                                    <button type="" class="shadow-inner transition ease-in-out delay-150 font-semibold text-white px-5 py-2 rounded-md hover:-translate-y-1 hover:scale-100 duration-300 bg-amber-900">Adopt Me</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <div class="col-span-5 flex item-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 w-12 h-12" viewBox="0 0 256 256"><path fill="currentColor" d="M96 140a12 12 0 1 1-12-12a12 12 0 0 1 12 12Zm76-12a12 12 0 1 0 12 12a12 12 0 0 0-12-12Zm60-80v88c0 52.93-46.65 96-104 96S24 188.93 24 136V48a16 16 0 0 1 27.31-11.31c.14.14.26.27.38.41L69 57a111.22 111.22 0 0 1 118.1 0l17.21-19.9c.12-.14.24-.27.38-.41A16 16 0 0 1 232 48Zm-16 0l-21.56 24.8a8 8 0 0 1-10.81 1.2A88.86 88.86 0 0 0 168 64.75V88a8 8 0 1 1-16 0V59.05a97.43 97.43 0 0 0-16-2.72V88a8 8 0 1 1-16 0V56.33a97.43 97.43 0 0 0-16 2.72V88a8 8 0 1 1-16 0V64.75A88.86 88.86 0 0 0 72.37 74a8 8 0 0 1-10.81-1.17L40 48v88c0 41.66 35.21 76 80 79.67v-20.36l-13.66-13.66a8 8 0 0 1 11.32-11.31L128 180.68l10.34-10.34a8 8 0 0 1 11.32 11.31L136 195.31v20.36c44.79-3.69 80-38 80-79.67Z"/></svg>
+                <h1 class="text-4xl font-bold">Our Cats</h1>
+            </div>
+            {% for pet in pets %}
+                {% if pet.animalType == "Cat"%}
+                    <div class="w-60 h-auto p-3 flex flex-col rounded-2xl shadow-lg mt-3" style="background-color: #f89651;" id="{{pet.petId}}">
+                        <div class="h-48 bg-white rounded-xl" style="background-image: url('{{ pet.petimage_set.first.petImage.url }}'); background-size: cover;"></div>
+                        <div class="flex flex-col gap-2">
+                            <div class="flex flex-row justify-between pt-2">
+                                <div class="flex flex-col">
+                                <span class="text-xl font-bold text-white">{{pet.petName}}</span>
+                                </div>
+                                <span class="font-bold  text-white">{{pet.animalType}}</span>
+                            </div>
+                            <div class="text-white">
+                                <p class="text-justify">{{pet.petDescription|truncatechars:50}}</p>
+                            </div>
+                            <div class="flex justify-end"> <!-- Use flex utility class to align items to the end -->
+                                <a href="{% url 'pet_profile' pet.slug pet.petId %}">
+                                    <button type="" class="shadow-inner transition ease-in-out delay-150 font-semibold text-white px-5 py-2 rounded-md hover:-translate-y-1 hover:scale-100 duration-300 bg-amber-900">Adopt Me</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <div class="col-span-5 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mr-3 w-12 h-12" viewBox="0 0 14 14"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M1.5 9.5c.552 0 1-.672 1-1.5s-.448-1.5-1-1.5s-1 .672-1 1.5s.448 1.5 1 1.5Zm3-4.5c.552 0 1-.672 1-1.5S5.052 2 4.5 2s-1 .672-1 1.5s.448 1.5 1 1.5Zm5 0c.552 0 1-.672 1-1.5S10.052 2 9.5 2s-1 .672-1 1.5s.448 1.5 1 1.5Zm3 4.5c.552 0 1-.672 1-1.5s-.448-1.5-1-1.5s-1 .672-1 1.5s.448 1.5 1 1.5ZM10 10c0 1.38-1.62 2-3 2s-3-.62-3-2s1-3.5 3-3.5s3 2.12 3 3.5Z"/></svg>
+                <h1 class="text-4xl font-bold">Adoptable Pets</h1>
+            </div>
+            {% for pet in pets %}
+            <div class="w-60 h-auto p-3 flex flex-col rounded-2xl shadow-lg mt-3" style="background-color: #f89651;" id="{{pet.petId}}">
+                <div class="h-48 bg-white rounded-xl" style="background-image: url('{{ pet.petimage_set.first.petImage.url }}'); background-size: cover;"></div>
+                <div class="flex flex-col gap-2">
+                    <div class="flex flex-row justify-between pt-2">
+                        <div class="flex flex-col">
+                        <span class="text-xl font-bold text-white">{{pet.petName}}</span>
+                        </div>
+                        <span class="font-bold  text-white">{{pet.animalType}}</span>
+                    </div>
+                    <div class="text-white">
+                        <p class="text-justify">{{pet.petDescription|truncatechars:50}}</p>
+                    </div>
+                    <div class="flex justify-end"> <!-- Use flex utility class to align items to the end -->
+                        <a href="{% url 'pet_profile' pet.slug pet.petId %}">
+                            <button type="" class="shadow-inner transition ease-in-out delay-150 font-semibold text-white px-5 py-2 rounded-md hover:-translate-y-1 hover:scale-100 duration-300 bg-amber-900">Adopt Me</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

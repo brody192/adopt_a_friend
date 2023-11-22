@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}       {% endblock %} | Adopt A Friend</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.css" rel="stylesheet" />
+    {% block scripts %} {% endblock %}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Imprima&display=swap'); 
+        @import url('https://fonts.googleapis.com/css2?family=Imprima&family=Nerko+One&display=swap');
+        
+        .text-shadows{
+            text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+        }
+        .subtitle{
+            font-family: 'Imprima', sans-serif; 
+            text-align: center;
+        }
+        .vl {
+            border-left: 4px solid #7c340c;
+            height: 225px;
+        }
+        
+        .link-animation {
+        position: relative;
+        color: #000;
+        text-decoration: none;
+        }
+
+        .link-animation:hover {
+        color: #000;
+        }
+
+        .link-animation::before {
+        content: "";
+        position: absolute; 
+        display: block;
+        width: 100%;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #000;
+        transform: scaleX(0);
+        transform-origin: top left;
+        transition: transform 0.3s ease;
+        }
+
+        .link-animation:hover::before {
+        transform: scaleX(1);
+        }
+    </style>
+    
+    {% block css %} {% endblock %}
+
+</head>
+<body style="background-color: #f2ebdd;">
+    {% block image %} {% endblock %}
+    <div>
+        <nav class="py-5 px-20 flex justify-between items-center shadow-xl" style="font-family: 'Imprima', sans-serif; background-color: #f89651;">
+            <a href="/" class="relative text-xl font-bold">Adopt A Friend</a>
+            <div class="relative flex space-x-10 ml-auto">
+                <a href="{% url 'index' %}" class="py-2 text-base font-bold link-animation">Home</a>
+                <a href="{% url 'donation_page' %}" class="py-2 text-base font-bold link-animation">Donate</a>
+                <a href="{% url 'pet_page' %}" class="py-2 text-base font-bold link-animation">Our Animals</a>
+                <a href="#" class="py-2 text-base font-bold link-animation">About Us</a>
+        
+                <div class="relative flex space-x-4">
+                    {% if user.is_authenticated %}
+                        {% if user.is_staff %}
+                            <a href="{% url 'staff_dashboard' %}" class="py-2 mr-5 text-base font-bold link-animation">Dashboard</a>
+                        {% else %}
+                            <a href="{{user.get_absolute_url}}" class="py-2 mr-5 text-base font-bold link-animation">Profile</a>
+                        {% endif %}
+                        <a href="{% url 'logout' %}">
+                            <button class="shadow-lg transition ease-in-out delay-150 font-bold text-white px-7 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300 bg-amber-900">
+                                Logout
+                            </button>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}">
+                            <button class="shadow-lg transition ease-in-out delay-150 font-bold text-amber-900 px-7 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300 border-2 border-amber-900">
+                                Sign in
+                            </button>
+                        </a>
+                        <a href="{% url 'signup' %}">
+                            <button class="shadow-lg transition ease-in-out delay-150 font-bold text-white px-7 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300 bg-amber-900 border-2 border-amber-900">
+                                Sign up
+                            </button>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+        
+    </div>
+
+    {% block content %}
+
+    {% endblock %}
+
+    

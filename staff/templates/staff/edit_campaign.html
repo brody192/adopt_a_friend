@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Imprima&display=swap'); 
+        @import url('https://fonts.googleapis.com/css2?family=Imprima&family=Nerko+One&display=swap');
+        
+        .text-shadows{
+            text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
+        }
+        .subtitle{
+            font-family: 'Imprima', sans-serif; 
+            text-align: center;
+        }
+        .vl {
+            border-left: 4px solid #7c340c;
+            height: 225px;
+        }
+    </style>
+    <title>Staff | Adopt A Friend</title>
+
+</head>
+<body style="background-image: url('/static/image/staffbg.png'); background-size: cover;">
+    
+
+    <a href="javascript:history.back()" class="text-black text-2xl font-bold ml-10 my-14" style="font-family: 'Imprima';">
+        <button class="mt-10 ml-10 transition ease-in-out delay-150 font-semibold px-8 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="Black" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3" />
+              </svg>
+        </button>
+     </a>
+    <div class="mx-64 mt-10 mb-20 py-12 px-16 bg-white rounded-3xl shadow-lg">
+        <h1 class=" text-black text-5xl pb-10 text-center" style="font-family: 'Imprima'; font-weight: bold;">Edit Campaign Form</h1>
+        <form method="POST" enctype="multipart/form-data" class="grid grid-cols-2 gap-x-10" style="font-family: 'Imprima'; font-size: 18px;">
+            <div class="col-span-2">
+                <h1 class=" text-black text-3xl" style="font-family: 'Imprima'; font-weight: bold;">Edit Campaign Information:</h1>
+                <p class="border-b-2 mb-6 mt-6 border-black"></p>
+            </div>
+            {% csrf_token %}
+            <div>
+                {{form.campaignName.label_tag}}
+                {{form.campaignName}}
+            </div>
+            <div>
+                {{form.campaignGoal.label_tag}}
+                {{form.campaignGoal}}
+            </div>
+            <div class="col-span-2">
+                {{form.campaignDescription.label_tag}}
+                {{form.campaignDescription}}
+            </div>
+            <div class="col-span-2">
+                {{form.campaignPurpose.label_tag}}
+                {{form.campaignPurpose}}
+            </div>
+            <div>
+                {{form.campaignImage.label_tag}}
+                {{form.campaignImage}}
+            </div>
+            <div></div><div></div>
+            <div class="flex justify-end">
+                <button type="submit" class="font-semibold text-white px-16 py-3 mt-6 rounded-md bg-amber-900 hover:bg-yellow-800">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+{% extends 'main/base.html' %}
+{% load social_share %}
+
+{% block title %} {{pet.petName}} {% endblock %}
+
+{% block content %} 
+
+<div class="mx-56 my-14">
+    <div id="controls-carousel" class="relative w-full" data-carousel="static">
+        <div class="relative h-96 overflow-hidden rounded-lg lg:h-96">
+            {% for image in images %}
+            <div class="hidden duration-700 ease-in-out bg-center bg-cover" data-carousel-item{% if forloop.first %}="active"{% endif %} style="background-image: url('{{ image.petImage.url }}'); background-position: center;">
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Slider controls -->
+        <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                </svg>
+                <span class="sr-only">Previous</span>
+            </span>
+        </button>
+        <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                </svg>
+                <span class="sr-only">Next</span>
+            </span>
+        </button>
+    </div>
+</div>
+
+
+<div class="mx-56 mt-12 mb-14" style="font-family: 'Imprima';">
+    <div class="grid grid-cols-6 gap-x-4 gap-y-6">
+        <div class="bg-white rounded-lg col-span-4 shadow-lg px-10 pt-10 pb-4">
+            <div class="flex justify-between items-center">
+                <h1 class="text-5xl font-bold">{{pet.petName}}</h1>
+                {% post_to_facebook object_or_url "Post to Facebook!" %}
+                <!-- <a href="">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" viewBox="0 0 24 24"><g transform="translate(24 0) scale(-1 1)"><path fill="currentColor" d="M18 9a3 3 0 1 0-2.977-2.63l-6.94 3.47a3 3 0 1 0 0 4.319l6.94 3.47a3 3 0 1 0 .895-1.789l-6.94-3.47a3.03 3.03 0 0 0 0-.74l6.94-3.47C16.456 8.68 17.19 9 18 9Z"/></g></svg>
+                </a> -->
+            </div>
+            <div class="flex py-4">
+                <p class="text-lg">{{pet.animalType}}</p> <p class="px-2">·</p> <p class="text-lg">{{pet.breed}}</p> <p class="px-2">·</p> <p class="text-lg">{{pet.petAge}}</p> <p class="px-2">·</p> <p class="text-lg">{{pet.petGender}}</p>  
+                {% if pet.isTrained %}
+                    <p class="px-2">·</p><p class="text-lg">Trained</p>
+                {% endif %}
+            </div>
+            <p class="border-b-2 border-gray-300"></p></p>
+            <h1 class="text-2xl pt-4"> About </h1>
+            <p class="py-4 text-justify">{{pet.petDescription}}</p>
+            <p class="border-b-2 border-gray-300"></p></p>
+            <h1 class="text-2xl pt-4">Health</h1>
+            <div class="py-4 grid grid-cols-2 gap-y-3">
+                <div>
+                    <p class="text-lg">Health Condition:</p>
+                    <p>{{medical.healthCondition}}</p>
+                </div>
+                <div>
+                    <p class="text-lg">Weight:</p>
+                    <p>{{medical.petWeight}}kg</p>
+                </div>
+                <div>
+                    <p class="text-lg">Disease:</p>
+                    <p>{{medical.disease}}</p>
+                </div>
+                <div>
+                    <p class="text-lg">Vaccinated:</p>
+                    <p>{% if medical.isVaccinated %}Yes{% else %}No{% endif %}</p>
+                </div>
+                <div>
+                    <p class="text-lg">Neutered/Spayed:</p>
+                    <p>{% if medical.isNeutered_or_Spayed %}Yes{% else %}No{% endif %}</p>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white rounded-lg col-span-2 shadow-lg px-10 pt-10 pb-4" style="background-color: #f89651;">
+            <div class="flex-col justify-center">
+                <h1 class="text-center text-2xl font-bold text-white">Considering adoption for {{pet.petName}}?</h1>
+                <div class="py-6">
+                    <a href="{% url 'application' pet.slug %}"><button type="" class="w-full shadow-inner transition ease-in-out delay-150 font-semibold text-white px-5 py-2 rounded-full hover:-translate-y-1 hover:scale-100 duration-300 bg-amber-900">Adopt {{pet.petName}}</button></a>
+                </div>
+                <div class="">
+                    <button type="" class="w-full shadow-inner transition ease-in-out delay-150 font-semibold text-amber-900 px-5 py-2 rounded-full hover:-translate-y-1 hover:scale-100 duration-300 border-2 border-amber-900">Read FAQs</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
