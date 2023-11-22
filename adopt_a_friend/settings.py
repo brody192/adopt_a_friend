@@ -78,8 +78,12 @@ WSGI_APPLICATION = 'adopt_a_friend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'C4e11c4g5c4baGdc3FABEG*cF5f4df2f',
+        'HOST': 'monorail.proxy.rlwy.net',
+        'PORT': '32574',
     }
 }
 
