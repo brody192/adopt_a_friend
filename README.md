@@ -1,2 +1,2 @@
-# adopt_a_friend
+# Adopt A Friend
 Capstone project
