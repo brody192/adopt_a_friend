@@ -8,9 +8,11 @@ from django.contrib.auth.decorators import login_required
 from .forms import DonationAmountForm
 from django.http import HttpResponse
 from django.db.models import Sum
+from django.views.decorators.cache import cache_page
+
 
 # Create your views here.
-
+@cache_page(60 * 2)
 def donation_page(request):
     campaigns = list(FundraisingCampaign.objects.all())  # Convert QuerySet to a list
 
@@ -24,6 +26,7 @@ def donation_page(request):
     
     return render(request, 'donation/donation_page.html', context)
 
+@cache_page(60 * 2)
 def campaign_details(request, campaign_id):
     campaign = get_object_or_404(FundraisingCampaign, campaignId=campaign_id)
 
@@ -40,6 +43,7 @@ def campaign_details(request, campaign_id):
     })
 
 @login_required
+@cache_page(60 * 2)
 def donate(request, campaign_id):
     campaign = get_object_or_404(FundraisingCampaign, campaignId=campaign_id)
 

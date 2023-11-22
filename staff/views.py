@@ -19,12 +19,14 @@ from reportlab.lib.enums import TA_CENTER, TA_RIGHT
 from PIL import Image
 from django.http import FileResponse
 import io
+from django.views.decorators.cache import cache_page
 
 
 
 # Create your views here.
 
 @staff_required
+@cache_page(60 * 10)
 def staff_dashboard(request):
     # Retrieve completed applications
     completed_applications = Application.objects.filter(status='Completed')
@@ -33,6 +35,7 @@ def staff_dashboard(request):
     return render(request, 'staff/staff_dashboard.html', {'completed_applications': completed_applications})
 
 @staff_required
+@cache_page(60 * 10)
 def staff_application_dashboard(request):
     application = Application.objects.all()
     total_application_count = application.count()
@@ -51,6 +54,7 @@ def staff_application_dashboard(request):
         'total_application_count': total_application_count})
 
 @staff_required
+@cache_page(60 * 10)
 def staff_campaign_dashboard(request):
     fundrasing_campaigns = FundraisingCampaign.objects.all()
     total_campaign_count = fundrasing_campaigns.count()
@@ -81,6 +85,7 @@ def staff_campaign_dashboard(request):
         'total_campaign_count': total_campaign_count})
 
 @staff_required
+@cache_page(60 * 10)
 def staff_pet_dashboard(request):
     query = request.GET.get('q')
 
@@ -111,6 +116,7 @@ def staff_pet_dashboard(request):
     return render(request, 'staff/staff_pet_dashboard.html', {'pets': pets, 'total_pets_count': total_pets_count})
 
 @staff_required
+@cache_page(60 * 10)
 def add_pet(request):
     if request.method == 'POST':
         pet_form = PetForm(request.POST)
@@ -142,6 +148,7 @@ def add_pet(request):
                    'pet_image_formset': pet_image_formset})
 
 @staff_required
+@cache_page(60 * 10)
 def edit_pet(request, slug):
     pet = get_object_or_404(Pet, slug=slug)
     
@@ -170,6 +177,7 @@ def edit_pet(request, slug):
     })
 
 @staff_required
+@cache_page(60 * 10)
 def delete_pet(request, pet_id):
     pet = get_object_or_404(Pet, petId=pet_id)
 
@@ -183,6 +191,7 @@ def delete_pet(request, pet_id):
     return JsonResponse({'message': 'Invalid request method.'}, status=400)
 
 @staff_required
+@cache_page(60 * 10)
 def add_campaign(request):
     if request.method == 'POST':
         form = CampaignForm(request.POST, request.FILES)
@@ -195,6 +204,7 @@ def add_campaign(request):
     return render(request, 'staff/add_campaign.html', {'form': form})
 
 @staff_required
+@cache_page(60 * 10)
 def edit_campaign(request, campaign_id):
     campaign = get_object_or_404(FundraisingCampaign, campaignId=campaign_id)
 
@@ -209,6 +219,7 @@ def edit_campaign(request, campaign_id):
     return render(request, 'staff/edit_campaign.html', {'form': form, 'campaign':campaign})
 
 @staff_required
+@cache_page(60 * 10)
 def delete_campaign(request, campaign_id):
     campaign = get_object_or_404(FundraisingCampaign, campaignId=campaign_id)
 
@@ -222,6 +233,7 @@ def delete_campaign(request, campaign_id):
     return JsonResponse({'message': 'Invalid request method.'}, status=400)
 
 @staff_required
+@cache_page(60 * 10)
 def review_application(request, application_id):
     # Retrieve the application and related details
     application = get_object_or_404(Application, applicationId=application_id)
@@ -265,7 +277,7 @@ def review_application(request, application_id):
     return render(request, 'staff/review_application.html', context)
 
 
-
+@cache_page(60 * 10)
 def generate_pet_data_pdf(request):
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="pet_data_report.pdf"'
@@ -388,6 +400,7 @@ def generate_pet_data_pdf(request):
 
     return response
 
+@cache_page(60 * 10)
 def create_table(data, fields ,title):
     # headers = [field.name for field in fields]
     table_data = data
@@ -403,6 +416,7 @@ def create_table(data, fields ,title):
     table.setStyle(style)
     return table
 
+@cache_page(60 * 10)
 def generate_application_report(request, application_id):
     # Create a file-like buffer to receive PDF data.
     buffer = io.BytesIO()

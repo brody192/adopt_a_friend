@@ -5,16 +5,18 @@
 
 {% block content %}
 <div style="font-family: 'Imprima';">
-  <div class="mx-36 my-8">
-    <h1 class="text-4xl mt-16 mb-8 font-bold">Featured</h1>
-    <div class="h-96 w-full grid grid-cols-3 rounded-xl shadow-lg" style="background-color: #f89651;">
-      <div class="bg-white h-96 w-full py-30 rounded-l-xl col-span-2" style="background-image: url('{{ featured_campaign.campaignImage.url }}'); background-size: cover;"></div>
-      <div class="my-8 mx-10 text-white text-lg relative">
-        <p class="font-bold text-3xl">{{ featured_campaign.campaignName }}</p>
-        <p class="mt-4">{{ featured_campaign.campaignDescription }}</p>
-      </div>
-    </div>  
-  </div>
+  {% if featured_campaign %}
+    <div class="mx-36 my-8">
+        <h1 class="text-4xl mt-16 mb-8 font-bold">Featured</h1>
+        <div class="h-96 w-full grid grid-cols-3 rounded-xl shadow-lg" style="background-color: #f89651;">
+          <div class="bg-white h-96 w-full py-30 rounded-l-xl col-span-2" style="background-image: url('{{ featured_campaign.campaignImage.url }}'); background-size: cover;"></div>
+          <div class="my-8 mx-10 text-white text-lg relative">
+            <p class="font-bold text-3xl">{{ featured_campaign.campaignName }}</p>
+            <p class="mt-4">{{ featured_campaign.campaignDescription }}</p>
+          </div>
+        </div>
+    </div>
+  {% endif %}  
   
   <h1 class="text-4xl mx-36 mt-16 mb-8 font-bold">Fundraising Campaigns</h1>
     <div class="mx-36 my-14 grid grid-cols-3 gap-x-6 gap-y-6">

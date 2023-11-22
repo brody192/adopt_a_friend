@@ -4,10 +4,13 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from pets.models import Application
+from django.views.decorators.cache import cache_page
+
 
 # Create your views here.
 
 @login_required
+@cache_page(60 * 2)
 def home(request, applicationId):
     application = get_object_or_404(Application, applicationId=applicationId)
 
@@ -20,6 +23,7 @@ def home(request, applicationId):
     return render(request, 'chat/home.html', {'application':application, 'user':user})
 
 @login_required
+@cache_page(60 * 2)
 def room(request, room):
     username = request.GET.get('username')
     room_details = get_object_or_404(Room, name=room)
@@ -30,6 +34,7 @@ def room(request, room):
     })
 
 @login_required
+@cache_page(60 * 2)
 def checkview(request, applicationId):
     room = request.POST['room_name']
     username = request.POST['username']
@@ -42,6 +47,7 @@ def checkview(request, applicationId):
         return redirect('/'+room+'/?username='+username)
 
 @login_required
+@cache_page(60 * 2)
 def send(request):
     message = request.POST['message']
     username = request.POST['username']
@@ -52,6 +58,7 @@ def send(request):
     return HttpResponse('Message sent successfully')
 
 @login_required
+@cache_page(60 * 2)
 def getMessages(request, room):
     room_details = Room.objects.get(name=room)
 

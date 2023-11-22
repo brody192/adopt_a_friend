@@ -27,10 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "verify_email.apps.VerifyEmailConfig",
-    'tailwind',
     'django_browser_reload',
     'main',
-    'theme',
     'users',
     'videochat',
     'pets',
@@ -81,9 +79,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'railway',
         'USER': 'postgres',
-        'PASSWORD': 'C4e11c4g5c4baGdc3FABEG*cF5f4df2f',
+        'PASSWORD': 'eC--EF3Fddb*DgcaE6fFce4d24G24fG6',
         'HOST': 'monorail.proxy.rlwy.net',
-        'PORT': '32574',
+        'PORT': '59303',
     }
 }
 
@@ -130,6 +128,12 @@ USE_I18N = True
 
 USE_TZ = True
 
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "django_cache",
+    }
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -142,12 +146,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-TAILWIND_APP_NAME = 'theme'
-
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
 
 NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
