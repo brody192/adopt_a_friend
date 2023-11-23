@@ -65,8 +65,8 @@
                 <a href="{% url 'index' %}" class="py-2 text-base font-bold link-animation">Home</a>
                 <a href="{% url 'donation_page' %}" class="py-2 text-base font-bold link-animation">Donate</a>
                 <a href="{% url 'pet_page' %}" class="py-2 text-base font-bold link-animation">Our Animals</a>
-                <a href="#" class="py-2 text-base font-bold link-animation">About Us</a>
-        
+                <a href="{% url 'about' %}" class="py-2 text-base font-bold link-animation">About Us</a>
+    
                 <div class="relative flex space-x-4">
                     {% if user.is_authenticated %}
                         {% if user.is_staff %}
@@ -80,21 +80,16 @@
                             </button>
                         </a>
                     {% else %}
-                        <a href="{% url 'login' %}">
-                            <button class="shadow-lg transition ease-in-out delay-150 font-bold text-amber-900 px-7 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300 border-2 border-amber-900">
-                                Sign in
-                            </button>
+                        <a href="{% url 'login' %}" class="shadow-lg transition ease-in-out delay-150 font-bold text-amber-900 px-7 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300 border-2 border-amber-900">
+                            Sign in
                         </a>
-                        <a href="{% url 'signup' %}">
-                            <button class="shadow-lg transition ease-in-out delay-150 font-bold text-white px-7 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300 bg-amber-900 border-2 border-amber-900">
-                                Sign up
-                            </button>
+                        <a href="{% url 'signup' %}" class="shadow-lg transition ease-in-out delay-150 font-bold text-white px-7 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300 bg-amber-900 border-2 border-amber-900">
+                            Sign up
                         </a>
                     {% endif %}
                 </div>
             </div>
         </nav>
-        
     </div>
 
     {% block content %}

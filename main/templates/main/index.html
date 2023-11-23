@@ -19,46 +19,112 @@
     </a>
 </div>
 
-<section class="px-20 md:mt-10 xl:mt-96">
+<div class="mx-36 mb-16 mt-96 text-amber-900" style="font-family: 'Imprima', sans-serif;">
+    <h1 class="text-shadows" style="font-size: 52px; font-family: 'Nerko One', cursive; color: rgb(120 53 15); ">HELP OUR PARTNERS</h1>
+    <div class="h-96 w-full grid grid-cols-3 rounded-xl shadow-lg" style="background-color: #f89651;">
+        <div class="bg-white h-96 w-full py-30 rounded-l-xl col-span-2" style="background-image: url('{{ campaign.campaignImage.url }}'); background-size: cover;">
+        </div>
+        <div class="my-8 mx-10 text-white text-lg relative">
+            <p class="font-bold text-3xl">{{ campaign.campaignName }}</p>
+            <p class="mt-4">{{ campaign.campaignDescription }}</p>
+        </div>
+    </div> 
+</div>
+
+<div class="mx-52 mb-16 mt-12 text-amber-900" style="font-family: 'Imprima', sans-serif;">
+    <h1 class="text-shadows text-center mb-4" style="font-size: 52px; font-family: 'Nerko One', cursive; color: rgb(120 53 15); ">OUR PROGRAMS</h1>
+    <div class="grid grid-cols-4 gap-y-6 gap-x-4">
+        <div class="flex justify-center">
+            <div class="w-full h-full border-2 px-10 py-10 border-amber-900 bg-transparent rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-100 duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-24 mx-auto block" viewBox="0 0 15 15"><path fill="none" stroke="currentColor" d="M6.5 3V2a1.5 1.5 0 1 0-3 0v1a1.5 1.5 0 1 0 3 0Zm5 0V2a1.5 1.5 0 0 0-3 0v1a1.5 1.5 0 1 0 3 0Zm3 4.5V7a1.5 1.5 0 0 0-3 0v.5a1.5 1.5 0 0 0 3 0Zm-11 0V7a1.5 1.5 0 1 0-3 0v.5a1.5 1.5 0 1 0 3 0Zm-.645 4.14l2.918-3.543a2.237 2.237 0 0 1 3.454 0l2.918 3.543c.939 1.14.128 2.86-1.35 2.86c-.194 0-.385-.045-.559-.132l-.36-.18a5.315 5.315 0 0 0-4.753 0l-.36.18a1.248 1.248 0 0 1-.558.132c-1.478 0-2.289-1.72-1.35-2.86Z"/></svg>            
+                <h1 class="text-center text-md font-bold mt-2">Individual Adoption Program </h1>
+            </div>
+        </div>
+        <div class="flex justify-center">
+            <div class="w-full h-full border-2 px-10 py-10 border-amber-900 bg-transparent rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-100 duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-24 mx-auto block" viewBox="0 0 512 512"><path fill="currentColor" d="m393.3 161.33l-58.768-84.892a48.09 48.09 0 0 0-38.775-20.673l-111.527-1.6H184c-57.579 0-101.757 9.631-130.21 56.634C27.3 154.551 16 229.08 16 360v16h36.557L29.024 496h32.61l23.533-120H96a99.521 99.521 0 0 0 70.088-27.992c16.979-16.246 29.226-38.472 35.419-64.274l.056-.232L229.006 152h-32.69l-25.979 124.488C162.425 309.168 138.766 344 96 344H48.06c.869-113.266 11.182-180.419 33.105-216.634c18.4-30.4 45.295-41.191 102.724-41.206l111.408 1.6a16.026 16.026 0 0 1 12.925 6.891L374.7 190.67l89.3 14.884v16.959l-14.892 79.421c-4.395 23.441-11.908 35.249-42.718 38.95l-126.306 21.609L279.249 496h32l.667-106.493l98.7-16.9c22.36-2.749 38.857-9.955 50.426-22.023c9.89-10.318 15.909-23.5 19.519-42.752L496 225.487v-47.041Z"/></svg>
+                <h1 class="text-center text-md font-bold mt-2">Emotional Support Animals Program</h1>
+            </div>
+        </div>
+        <div class="flex justify-center">
+            <div class="w-full h-full border-2 px-10 py-10 border-amber-900 bg-transparent rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-100 duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-24 mx-auto block" viewBox="0 0 48 48"><g fill="currentColor"><path fill-rule="evenodd" d="M6.818 14.5a1.157 1.157 0 0 1 0-1.636l6.546-6.546A1.157 1.157 0 1 1 15 7.955l-.818.817l4.09 4.09l3.273-3.272a1.157 1.157 0 1 1 1.637 1.636l-1.637 1.637l13.91 13.91a5.787 5.787 0 0 1 1.295 6.205l1.159 1.159c.605.605.805 1.463.6 2.235l2.673 2.673a1.157 1.157 0 1 1-1.637 1.637l-2.673-2.673a2.313 2.313 0 0 1-2.236-.6l-1.158-1.158a5.787 5.787 0 0 1-6.205-1.296l-2.14-2.14l6.767-6.768l-11.77-11.77l-5.353 5.354L17.147 22h-2.829l-.955-.955l-1.636 1.636a1.157 1.157 0 1 1-1.636-1.636l3.273-3.273l-4.09-4.09l-.82.818a1.157 1.157 0 0 1-1.636 0Zm5.95-4.313l4.09 4.09l-2.08 2.08l-4.09-4.09l2.08-2.08ZM28.687 33.54l-.504-.504l5.353-5.354l.504.504a3.787 3.787 0 0 1 .848 4.062l-2.14 2.14a3.786 3.786 0 0 1-4.061-.848Zm6.768 1.414a5.144 5.144 0 0 1-.229.216l.824.824a.314.314 0 1 0 .445-.444l-.824-.824a5.86 5.86 0 0 1-.216.228Z" clip-rule="evenodd"/><path d="M16 28a1 1 0 0 1 1 1v2h2a1 1 0 1 1 0 2h-2v2a1 1 0 1 1-2 0v-2h-2a1 1 0 1 1 0-2h2v-2a1 1 0 0 1 1-1Z"/><path fill-rule="evenodd" d="M8.66 37.689A12.123 12.123 0 0 0 15.5 42a12.122 12.122 0 0 0 6.84-4.31A12.35 12.35 0 0 0 25 29.997V26.4c0-.637-.25-1.247-.695-1.697a2.361 2.361 0 0 0-1.68-.703H8.376c-.63 0-1.234.253-1.68.703A2.413 2.413 0 0 0 6 26.4v3.598a12.35 12.35 0 0 0 2.66 7.69ZM23 29.999v.004a10.352 10.352 0 0 1-2.228 6.445a10.13 10.13 0 0 1-5.273 3.492a10.13 10.13 0 0 1-5.271-3.492A10.35 10.35 0 0 1 8 30.003V26.4c0-.113.045-.217.117-.29a.362.362 0 0 1 .257-.11h14.252c.092 0 .185.037.257.11a.413.413 0 0 1 .117.29v3.598Z" clip-rule="evenodd"/></g></svg>
+                <h1 class="text-center text-md font-bold mt-2">Vaccination & Deworming</h1>
+            </div>
+        </div>
+        <div class="flex justify-center">
+            <div class="w-full h-full border-2 px-10 py-10 border-amber-900 bg-transparent rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-100 duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-24 mx-auto block" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="m18 20l3.824-3.824a.6.6 0 0 0 .176-.424V10.5A1.5 1.5 0 0 0 20.5 9v0a1.5 1.5 0 0 0-1.5 1.5V15"/><path d="m18 16l.858-.858a.484.484 0 0 0 .142-.343v0a.485.485 0 0 0-.268-.433l-.443-.221a2 2 0 0 0-2.308.374l-.895.895a2 2 0 0 0-.586 1.414V20M6 20l-3.824-3.824A.6.6 0 0 1 2 15.752V10.5A1.5 1.5 0 0 1 3.5 9v0A1.5 1.5 0 0 1 5 10.5V15"/><path d="m6 16l-.858-.858A.485.485 0 0 1 5 14.799v0c0-.183.104-.35.268-.433l.443-.221a2 2 0 0 1 2.308.374l.895.895a2 2 0 0 1 .586 1.414V20m4.167-8h-3.334V9.667H8V6.333h2.333V4h3.334v2.333H16v3.334h-2.333V12Z"/></g></svg>
+                <h1 class="text-center text-md font-bold mt-2">Spay and Neuter</h1>
+            </div>
+        </div>
+        <div class="flex justify-center">
+            <div class="w-full h-full border-2 px-10 py-10 border-amber-900 bg-transparent rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-100 duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-24 mx-auto block" viewBox="0 0 24 24"><g fill="none"><path fill="currentColor" d="m8.962 19.379l-.473.582l.473-.582ZM12 5.574l-.548.512a.75.75 0 0 0 1.096 0L12 5.574Zm3.038 13.805l.473.582l-.473-.582ZM12 21v-.75v.75Zm-2.566-2.204c-1.45-1.176-3.142-2.719-4.466-4.408c-1.339-1.707-2.218-3.46-2.218-5.07h-1.5c0 2.117 1.13 4.202 2.537 5.996c1.422 1.813 3.21 3.436 4.702 4.647l.945-1.165ZM2.75 9.318c0-2.905 1.268-4.7 2.836-5.315c1.565-.613 3.754-.175 5.866 2.083l1.096-1.024c-2.388-2.554-5.199-3.36-7.509-2.456C2.732 3.51 1.25 5.992 1.25 9.318h1.5ZM15.51 19.96c1.493-1.211 3.281-2.834 4.703-4.647c1.407-1.794 2.537-3.879 2.537-5.997h-1.5c0 1.612-.88 3.364-2.218 5.071c-1.324 1.689-3.016 3.232-4.466 4.408l.945 1.165Zm7.24-10.644c0-3.325-1.482-5.807-3.79-6.71c-2.31-.905-5.12-.1-7.508 2.455l1.096 1.024c2.112-2.258 4.301-2.696 5.866-2.083c1.568.614 2.836 2.41 2.836 5.314h1.5ZM8.49 19.961c1.27 1.032 2.152 1.789 3.51 1.789v-1.5c-.723 0-1.173-.324-2.566-1.454l-.945 1.165Zm6.076-1.165c-1.393 1.13-1.843 1.454-2.566 1.454v1.5c1.358 0 2.24-.757 3.51-1.789l-.944-1.165Z"/><path stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M18.5 9h-2m0 0h-2m2 0V7m0 2v2"/></g></svg>
+                <h1 class="text-center text-md font-bold mt-2">Consultation and Treatment</h1>
+            </div>
+        </div>
+        <div class="flex justify-center">
+            <div class="w-full h-full border-2 px-10 py-10 border-amber-900 bg-transparent rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-100 duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-24 mx-auto block" viewBox="0 0 512 512"><path fill="currentColor" d="m368 350.643l-112 63l-112-63v-66.562l-32-17.778v103.054l144 81l144-81V266.303l-32 17.778v66.562z"/><path fill="currentColor" d="M256 45.977L32 162.125v27.734L256 314.3l192-106.663V296h32V162.125Zm160 142.831l-32 17.777L256 277.7l-128-71.115l-32-17.777l-22.179-12.322L256 82.023l182.179 94.463Z"/></svg>
+                <h1 class="text-center text-md font-bold mt-2">Pet Education Program</h1>
+            </div>
+        </div>
+        <div class="flex justify-center">
+            <div class="w-full h-full border-2 px-10 py-10 border-amber-900 bg-transparent rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-100 duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-24 mx-auto block" viewBox="0 0 20 20"><path fill="currentColor" d="M10 3a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3ZM7.5 4.5a2.5 2.5 0 1 1 5 0a2.5 2.5 0 0 1-5 0Zm8-.5a1 1 0 1 0 0 2a1 1 0 0 0 0-2Zm-2 1a2 2 0 1 1 4 0a2 2 0 0 1-4 0Zm-10 0a1 1 0 1 1 2 0a1 1 0 0 1-2 0Zm1-2a2 2 0 1 0 0 4a2 2 0 0 0 0-4Zm.6 11.998A2 2 0 0 1 3 13V9.25A.25.25 0 0 1 3.25 9h1.764c.04-.367.17-.708.365-1H3.25C2.56 8 2 8.56 2 9.25V13a3 3 0 0 0 3.404 2.973a4.963 4.963 0 0 1-.304-.975Zm9.496.975A3 3 0 0 0 18 13V9.25C18 8.56 17.44 8 16.75 8h-2.129c.196.292.325.633.365 1h1.764a.25.25 0 0 1 .25.25V13a2 2 0 0 1-2.1 1.998a4.966 4.966 0 0 1-.304.975ZM7.25 8C6.56 8 6 8.56 6 9.25V14a4 4 0 0 0 8 0V9.25C14 8.56 13.44 8 12.75 8h-5.5ZM7 9.25A.25.25 0 0 1 7.25 9h5.5a.25.25 0 0 1 .25.25V14a3 3 0 1 1-6 0V9.25Z"/></svg>
+                <h1 class="text-center text-md font-bold mt-2">Veterinary Response Team Program</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="mx-36 mt-12 ">
     <div class="grid grid-cols-2">
         <div class="col-span-1">
-            <h1 class="text-shadows" style="font-size: 46px; font-family: 'Nerko One', cursive; color: rgb(120 53 15); ">ADOPT ME</h1>
+            <h1 class="text-shadows" style="font-size: 52px; font-family: 'Nerko One', cursive; color: rgb(120 53 15); ">ADOPT ME</h1>
         </div>
         <div class="col-span-1 text-right">
-            <a href="/" class="text-amber-900 hover:text-yellow-800">See More</a>
+            <a href="{% url 'pet_page' %}" class="text-amber-900 hover:text-yellow-800">See More</a>
         </div>
     </div>
+    <div class="grid grid-cols-4">
+        {% for pet in pets %}
+        <div class="w-60 h-auto p-3 flex flex-col rounded-2xl shadow-lg mt-3 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;" id="{{pet.petId}}">
+            <div class="h-48 bg-white rounded-xl" style="background-image: url('{{ pet.petimage_set.first.petImage.url }}'); background-size: cover;"></div>
+            <div class="flex flex-col gap-2">
+                <div class="flex flex-row justify-between pt-2">
+                    <div class="flex flex-col">
+                    <span class="text-xl font-bold text-white">{{pet.petName}}</span>
+                    </div>
+                    <span class="font-bold  text-white">{{pet.animalType}}</span>
+                </div>
+                <div class="text-white">
+                    <p class="text-justify">{{pet.petDescription|truncatechars:50}}</p>
+                </div>
+                <div class="flex justify-end"> <!-- Use flex utility class to align items to the end -->
+                    <a href="{% url 'pet_profile' pet.slug pet.petId %}">
+                        <button type="" class="shadow-inner transition ease-in-out delay-150 font-semibold text-white px-5 py-2 rounded-md hover:-translate-y-1 hover:scale-100 duration-300 bg-amber-900">Adopt Me</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
 
-    <!-- CARDS -->
-    <div>
-        <div class="grid grid-cols-3">
-            <div class="py-60 mx-8 mt-3 mb-6 shadow-lg bg-white col-span-1 border-2 rounded-xl">
-                <!-- CONTENT HERE -->
-            </div>
-            <div class="py-60 mx-8 mt-3 mb-6 shadow-lg bg-white col-span-1 border-2 rounded-xl">
-                <!-- CONTENT HERE -->
-            </div>
-            <div class="py-60 mx-8 mt-3 mb-6 shadow-lg bg-white col-span-1 border-2 rounded-xl">
-                <!-- CONTENT HERE -->
-            </div>
+<section class="mx-36 my-24 grid grid-cols-2 gap-x-12">
+    <div>    
+        <img src="{% static '\image\shelter.jpg' %}" alt="Shelter" class="rounded-lg mx-auto" style="height: auto; width: 38rem;">
+    </div>
+    <div>    
+        <h1 class="text-5xl text-amber-900" style="font-family: 'Nerko One';">Quezon City Animal Care and Adoption Center</h1>
+        <p class="text-md my-8" style="font-family: 'Imprima';"> The Quezon City Government, through the city’s Animal Welfare and Rehabilitation Program, has established an adoption center for impounded and neglected animals. The 450-square meter pet adoption center in Barangay Payatas can provide temporary homes for up to 60 animals until they find new families. The facility also includes a surgery room for dogs and cats that need to be neutered and spayed, as well as for other animals requiring immediate medical attention. Two separate cages are available to isolate sick animals from healthy ones, preventing the spread of infections. Before being offered for adoption, the animals will undergo rehabilitation. This comprehensive approach marks the city's commitment to rehabilitating animals and finding them new homes.</p>
+        <div class="flex justify-end"> <!-- Use flex utility class to align items to the end -->
+            <a href="{% url 'about' %}">
+                <button type="" class="shadow-inner transition ease-in-out delay-150 font-semibold text-white px-5 py-2 rounded-md hover:-translate-y-1 hover:scale-100 duration-300 bg-amber-900">Learn More</button>
+            </a>
         </div>
     </div>
 </section>
-
-<section class="mt-16 px-20 pb-12" style="background-color: #e39759;">
-    <h1 class="text-shadows pt-7 pb-5" style="font-size: 46px; font-family: 'Nerko One', cursive; color: rgb(120 53 15); "> LEARN THEIR STORIES </h1>
-    <div class="py-60 shadow-lg bg-white rounded-xl">
-        <!-- CARD -->
-    </div>
-</section>
-
-<section>
-    
-</section>
-
-
-
-
-
-
 {% endblock %}

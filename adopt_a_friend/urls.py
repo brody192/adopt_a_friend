@@ -6,6 +6,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('', index, name='index'),
+    path('about/', about, name='about'),
     path('admin/', admin.site.urls),
     path('', include('videochat.urls')),
     path('verification/', include('verify_email.urls')),	

@@ -1,0 +1,15 @@
+{% extends 'staff/base.html' %}
+
+{% block title %} Delete Campaign Confirmation {% endblock %}
+
+{% block content %}
+    <h2>Confirm Deletion</h2>
+    <p>Are you sure you want to delete the campaign "{{ campaign.campaignName }}"?</p>
+
+    <form method="post" action="{% url 'delete_campaign' campaign_id=campaign.campaignId %}">
+        {% csrf_token %}
+        <button type="submit">Confirm Delete</button>
+    </form>
+
+    <a href="{% url 'staff_campaign_dashboard' %}">Cancel</a>
+{% endblock %}

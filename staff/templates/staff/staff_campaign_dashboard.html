@@ -1,201 +1,137 @@
+{% extends 'staff/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Dashboard | Adopt A Friend</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Imprima&display=swap'); 
-        @import url('https://fonts.googleapis.com/css2?family=Imprima&family=Nerko+One&display=swap');
-        
-        .text-shadows{
-            text-shadow: -1px 1px 0 #000, 1px 1px 0 #000, 1px -1px 0 #000, -1px -1px 0 #000;
-        }
-        .subtitle{
-            font-family: 'Imprima', sans-serif; 
-            text-align: center;
-        }
-        .vl {
-            border-left: 4px solid #7c340c;
-            height: 225px;
-        }
 
-    </style>
+{% block title %} Staff Dashboard {% endblock %}
 
-</head>
-<body style="background-image: url('/static/image/staffbg.png'); background-size: cover;">
-    <div>
-        <nav class="py-5 px-4 lg:px-20 flex justify-between items-center bg-transparent" style="font-family: 'Imprima', sans-serif;">
-            <a href="/" class="relative text-xl font-semibold">Adopt A Friend</a>
-    
-            <!-- Hamburger Menu Icon -->
-            <div class="lg:hidden">
-                <button id="burger" class="text-white focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16m-7 6h7"></path>
-                    </svg>
+{% block image %} <img src="{% static '\image\dashboard.png' %}" alt="" class="absolute"> {% endblock %}
+
+{% block content %}
+<div>
+    <h1 class="relative ml-40 mt-10 text-7xl text-shadows text-gray-50 font-bold" style="font-family: 'Imprima'"> 
+        Campaign Dashboard 
+    </h1>
+</div>
+
+<div class="mx-40 mt-5 relative">
+    <div class="h-32 bg-white rounded-3xl shadow-lg flex justify-between" style="font-family: 'Imprima';">
+        <h1 class="text-7xl py-5 pl-20 total-campaign-count">{{ total_campaign_count }}</h1>
+        <h1 class="text-3xl py-10 pr-20 flex justify-end">Active Campaigns</h1>
+    </div>
+</div>
+
+<div class="mt-16 mb-16 py-12 px-20 mx-40 bg-white rounded-3xl relative shadow-lg" style="font-family: 'Imprima';">
+    <div class="flex justify-between">
+        <div class="flex">
+            <a href="{% url 'add_campaign' %}">
+                <button class="text-shadows shadow-inner transition ease-in-out delay-150 font-semibold text-white px-9 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>  
                 </button>
-            </div>
-    
-            <div id="menu" class="hidden lg:flex space-x-10">
-                <a href="{% url 'index' %}" class="py-2 text-base font font-semibold hover:text-white">Home</a>
-                <a href="#" class="py-2 text-base font font-semibold hover:text-white">Donate</a>
-                <a href="#" class="py-2 text-base font font-semibold hover:text-white">Our Animals</a>
-                <a href="#" class="py-2 text-base font font-semibold hover:text-white">About Us</a>
-                {% if user.is_authenticated %}
-                <a href="{{user.get_absolute_url}}" class="py-2 text-base font font-semibold hover:text-white">Profile</a>
-                <a href="{% url 'logout' %}">
-                    <button
-                        class="shadow-lg transition ease-in-out delay-150 font-semibold text-white px-9 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300"
-                        style="background-color: #f89651;">
-                        Logout
-                    </button>
-                </a>
-                {% else %}
-                <a href="{% url 'login' %}">
-                    <button
-                        class="shadow-lg transition ease-in-out delay-150 font-semibold text-white px-9 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300"
-                        style="background-color: #f89651;">
-                        Login
-                    </button>
-                </a>
-                {% endif %}
-    
-            </div>
-        </nav>
+            </a>
+            
+            <a href="" class="ml-3">
+                <button class="text-shadows shadow-inner transition ease-in-out delay-150 font-semibold text-white px-9 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                      </svg>                      
+                </button>
+            </a>
+        </div>
+
+        <form method="GET" action="{% url 'staff_campaign_dashboard' %}" class="mb-4">
+            <input type="text" name="q" placeholder="Search campaign..." class="p-2 border border-gray-300 rounded">
+            <button type="submit" class="shadow-inner transition ease-in-out delay-150 font-semibold text-white px-5 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;">Search</button>
+        </form>
     </div>
     
 
-    <div>
-        <h1 class="relative ml-40 mt-10 text-7xl text-shadows text-gray-50 font-bold" style="font-family: 'Imprima'"> 
-            Campaign Dashboard 
-        </h1>
-    </div>
-    
-    <div class="mx-40 mt-5 relative">
-        <div class="h-32 bg-white rounded-3xl shadow-lg flex justify-between" style="font-family: 'Imprima';">
-            <h1 class="text-7xl py-5 pl-20 total-campaign-count">{{ total_campaign_count }}</h1>
-            <h1 class="text-3xl py-10 pr-20 flex justify-end">Active Campaigns</h1>
-        </div>
-    </div>
-    
-    <div class="mt-16 mb-16 py-12 px-20 mx-40 bg-white rounded-3xl relative shadow-lg" style="font-family: 'Imprima';">
-        <div class="flex justify-between">
-            <div class="flex">
-                <a href="{% url 'add_campaign' %}">
-                    <button class="text-shadows shadow-inner transition ease-in-out delay-150 font-semibold text-white px-9 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                        </svg>  
-                    </button>
-                </a>
-                
-                <a href="" class="ml-3">
-                    <button class="text-shadows shadow-inner transition ease-in-out delay-150 font-semibold text-white px-9 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-                          </svg>                      
-                    </button>
-                </a>
+    <div class="grid grid-cols-4 justify-center mx-auto max-w-screen-xl">
+        {% for fundraisingcampaign in fundrasing_campaigns %}
+        <div class="w-60 h-80 p-3 flex flex-col rounded-2xl shadow-inner mt-6" style="background-color: #f89651;" id="{{fundraisingcampaign.campaignId}}">
+            <div class="h-48 bg-white rounded-xl" style="background-image: url('{{ fundraisingcampaign.campaignImage.url }}'); background-size: cover;"></div>
+            <div class="flex flex-col gap-4">
+            <div class="flex flex-row justify-between">
+                <div class="flex flex-col">
+                <span class="text-base font-bold text-white pt-2">{{fundraisingcampaign.campaignName}}</span>
+                <p class="text-xs text-white">{{fundraisingcampaign.campaignId}}</p>
+                <p class="text-xs text-white">{{fundraisingcampaign.campaignGoal}}</p>
             </div>
-    
-            <form method="GET" action="{% url 'staff_campaign_dashboard' %}" class="mb-4">
-                <input type="text" name="q" placeholder="Search campaign..." class="p-2 border border-gray-300 rounded">
-                <button type="submit" class="shadow-inner transition ease-in-out delay-150 font-semibold text-white px-5 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;">Search</button>
-            </form>
-        </div>
-        
-    
-        <div class="grid grid-cols-4 justify-center mx-auto max-w-screen-xl">
-            {% for fundraisingcampaign in fundrasing_campaigns %}
-            <div class="w-60 h-80 p-3 flex flex-col rounded-2xl shadow-inner mt-6" style="background-color: #f89651;" id="{{fundraisingcampaign.campaignId}}">
-                <div class="h-48 bg-white rounded-xl" style="background-image: url('{{ fundraisingcampaign.campaignImage.url }}'); background-size: cover;"></div>
-                <div class="flex flex-col gap-4">
-                <div class="flex flex-row justify-between">
-                    <div class="flex flex-col">
-                    <span class="text-base font-bold text-white pt-2">{{fundraisingcampaign.campaignName}}</span>
-                    <p class="text-xs text-white">{{fundraisingcampaign.campaignId}}</p>
-                    <p class="text-xs text-white">{{fundraisingcampaign.campaignGoal}}</p>
-                </div>
-                </div>
-                <div class=" bg-white rounded-md">
-                    <div class="flex justify-around items-center py-3">
-                        <a href="{% url 'edit_campaign' campaign_id=fundraisingcampaign.campaignId %}">
-                            <div class="flex gap-2 text-gray-600 hover:scale-110 duration-200 hover:cursor-pointer">
-                                <svg class="w-6 stroke-green-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                </svg>
-                                <button class="font-semibold text-sm text-green-700">Update</button> 
-                            </div>
-                        </a>
+            </div>
+            <div class=" bg-white rounded-md">
+                <div class="flex justify-around items-center py-3">
+                    <a href="{% url 'edit_campaign' campaign_id=fundraisingcampaign.campaignId %}">
                         <div class="flex gap-2 text-gray-600 hover:scale-110 duration-200 hover:cursor-pointer">
-                            <svg class="w-6 stroke-red-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                <line x1="10" y1="11" x2="10" y2="17"></line>
-                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                            <svg class="w-6 stroke-green-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                             </svg>
-                            <button class="font-semibold text-sm text-red-700 delete-campaign-btn" data-campaign-id="{{ fundraisingcampaign.campaignId }}">Delete</button>
+                            <button class="font-semibold text-sm text-green-700">Update</button> 
                         </div>
+                    </a>
+                    <div class="flex gap-2 text-gray-600 hover:scale-110 duration-200 hover:cursor-pointer">
+                        <svg class="w-6 stroke-red-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            <line x1="10" y1="11" x2="10" y2="17"></line>
+                            <line x1="14" y1="11" x2="14" y2="17"></line>
+                        </svg>
+                        <button class="font-semibold text-sm text-red-700 delete-campaign-btn">Delete</button>
                     </div>
                 </div>
             </div>
-            </div>
-            {% endfor %}
-    
-            <div class="mt-10 flex justify-center col-span-4">
-                <span class="">
-                    {% if fundrasing_campaigns.has_previous %}
-                        <a href="?page=1">
-                            <button class="text-shadows shadow-inner transition ease-in-out delay-150 font-semibold text-white px-2 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="White" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
-                                </svg>                                                    
-                            </button>
-                        </a>
-                        <a href="?page={{ fundrasing_campaigns.previous_page_number }}">
-                            <button class="text-shadows shadow-inner transition ease-in-out delay-150 font-semibold text-white px-2 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                                </svg>                                                                                 
-                            </button>
-                        </a>
-                    {% endif %}
-            
-                    <span class="text-lg mx-4">
-                        Page {{ fundrasing_campaigns.number }} of {{ fundrasing_campaigns.paginator.num_pages }}
-                    </span>
-            
-                    {% if pets.has_next %}
-                        <a href="?page={{ fundrasing_campaigns.next_page_number }}">
-                            <button class="text-shadows shadow-inner transition ease-in-out delay-150 font-semibold text-white px-2 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                                  </svg>                                                                                                                                          
-                            </button>
-                        </a>
-                        <a href="?page={{ fundrasing_campaigns.paginator.num_pages }}">
-                            <button class="text-shadows shadow-inner transition ease-in-out delay-150 font-semibold text-white px-2 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                                  </svg>                                                                                                                                                                        
-                            </button>
-                        </a>
-                    {% endif %}
+        </div>
+        </div>
+        {% endfor %}
+
+        <div class="mt-10 flex justify-center col-span-4">
+            <span class="">
+                {% if fundrasing_campaigns.has_previous %}
+                    <a href="?page=1">
+                        <button class="text-shadows shadow-inner transition ease-in-out delay-150 font-semibold text-white px-2 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="White" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
+                            </svg>                                                    
+                        </button>
+                    </a>
+                    <a href="?page={{ fundrasing_campaigns.previous_page_number }}">
+                        <button class="text-shadows shadow-inner transition ease-in-out delay-150 font-semibold text-white px-2 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                            </svg>                                                                                 
+                        </button>
+                    </a>
+                {% endif %}
+        
+                <span class="text-lg mx-4">
+                    Page {{ fundrasing_campaigns.number }} of {{ fundrasing_campaigns.paginator.num_pages }}
                 </span>
-            </div>
+        
+                {% if pets.has_next %}
+                    <a href="?page={{ fundrasing_campaigns.next_page_number }}">
+                        <button class="text-shadows shadow-inner transition ease-in-out delay-150 font-semibold text-white px-2 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                              </svg>                                                                                                                                          
+                        </button>
+                    </a>
+                    <a href="?page={{ fundrasing_campaigns.paginator.num_pages }}">
+                        <button class="text-shadows shadow-inner transition ease-in-out delay-150 font-semibold text-white px-2 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                              </svg>                                                                                                                                                                        
+                        </button>
+                    </a>
+                {% endif %}
+            </span>
         </div>
     </div>
-    
+</div>
+{% endblock %}
 
-   
-</body>
-<script>
+
+{% block script %}
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
         const deleteButtons = document.querySelectorAll('.delete-campaign-btn');
 
@@ -203,7 +139,6 @@
             button.addEventListener('click', function () {
                 const campaignId = this.getAttribute('data-campaign-id');
                 const confirmation = confirm('Are you sure you want to delete this campaign?');
-
                 if (confirmation) {
                     fetch(`/staff/dashboard/campaigns/delete_campaign/${campaignId}`, {
                         method: 'DELETE',
@@ -230,11 +165,5 @@
             });
         });
     });
-</script>
-
-<script>
-    document.getElementById('burger').addEventListener('click', function () {
-        document.getElementById('menu').classList.toggle('hidden');
-    });
-</script>
-</html>
+</script> -->
+{% endblock %}
