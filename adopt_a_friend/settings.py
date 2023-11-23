@@ -45,7 +45,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
 
 ]
 
@@ -73,16 +72,32 @@ WSGI_APPLICATION = 'adopt_a_friend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'railway',
+#         'USER': 'postgres',
+#         'PASSWORD': 'eC--EF3Fddb*DgcaE6fFce4d24G24fG6',
+#         'HOST': 'monorail.proxy.rlwy.net',
+#         'PORT': '59303',
+#     }
+# }
+
+
+
+# settings.py
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'eC--EF3Fddb*DgcaE6fFce4d24G24fG6',
-        'HOST': 'monorail.proxy.rlwy.net',
-        'PORT': '59303',
+        'USER': 'root',
+        'PASSWORD': 'adFaGFabeec-5FB16AfeBbC65dAh2bbc',
+        'HOST': 'roundhouse.proxy.rlwy.net',    # Set to the MySQL server's hostname or IP address
+        'PORT': '18063',         # MySQL default port is 3306
     }
 }
+
 
 
 # Password validation
@@ -145,8 +160,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
 MAX_RETRIES = 6
 

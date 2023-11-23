@@ -21,8 +21,6 @@ from django.http import FileResponse
 import io
 from django.views.decorators.cache import cache_page
 
-
-
 # Create your views here.
 
 @staff_required
