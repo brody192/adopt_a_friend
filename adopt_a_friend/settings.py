@@ -72,33 +72,29 @@ WSGI_APPLICATION = 'adopt_a_friend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'railway',
-#         'USER': 'postgres',
-#         'PASSWORD': 'eC--EF3Fddb*DgcaE6fFce4d24G24fG6',
-#         'HOST': 'monorail.proxy.rlwy.net',
-#         'PORT': '59303',
-#     }
-# }
-
-
-
-# settings.py
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'railway',
-        'USER': 'root',
-        'PASSWORD': 'adFaGFabeec-5FB16AfeBbC65dAh2bbc',
-        'HOST': 'roundhouse.proxy.rlwy.net',    # Set to the MySQL server's hostname or IP address
-        'PORT': '18063',         # MySQL default port is 3306
+        'USER': 'postgres',
+        'PASSWORD': 'gbb-ad53-BD2A4cE616DCBfbb54D51gC',
+        'HOST': 'monorail.proxy.rlwy.net',
+        'PORT': '40606',
     }
 }
 
+# # settings.py
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'railway',
+#         'USER': 'root',
+#         'PASSWORD': 'adFaGFabeec-5FB16AfeBbC65dAh2bbc',
+#         'HOST': 'roundhouse.proxy.rlwy.net',    # Set to the MySQL server's hostname or IP address
+#         'PORT': '18063',         # MySQL default port is 3306
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
