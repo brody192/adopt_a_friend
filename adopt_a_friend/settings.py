@@ -15,6 +15,7 @@ SECRET_KEY = 'django-insecure-ko3&^p3c-^^41_c#r$#s-7q+_onf543=(676g#dx#ya0_@!sji
 DEBUG = True
 
 ALLOWED_HOSTS = ['adoptafriend.up.railway.app']
+CSRF_TRUSTED_ORIGINS=['adoptafriend.up.railway.app']
 
 
 # Application definition
