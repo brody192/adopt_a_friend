@@ -15,27 +15,16 @@ from django.views.decorators.cache import cache_page
 @cache_page(60 * 2)
 def donation_page(request):
     campaigns = list(FundraisingCampaign.objects.all())  # Convert QuerySet to a list
-
-    # Shuffle the campaigns randomly
     random.shuffle(campaigns)
-
-    # Select the first campaign as the featured one
     featured_campaign = campaigns[0]
-
     context = {'featured_campaign': featured_campaign, 'campaigns': campaigns}
-    
     return render(request, 'donation/donation_page.html', context)
 
 @cache_page(60 * 2)
 def campaign_details(request, campaign_id):
     campaign = get_object_or_404(FundraisingCampaign, campaignId=campaign_id)
-
-    # Get the recent donors for the campaign
     recent_donors = Donation.objects.filter(campaign=campaign).order_by('-donationId')[:5]
-
-    # Calculate the total amount donated
     total_donated = Donation.objects.filter(campaign=campaign).aggregate(Sum('donationAmount'))['donationAmount__sum']
-
     return render(request, 'donation/donation_profile.html', {
         'campaign': campaign,
         'recent_donors': recent_donors,
@@ -46,7 +35,6 @@ def campaign_details(request, campaign_id):
 @cache_page(60 * 2)
 def donate(request, campaign_id):
     campaign = get_object_or_404(FundraisingCampaign, campaignId=campaign_id)
-
     if request.method == 'POST':
         form = DonationAmountForm(request.POST)
         if form.is_valid():
@@ -60,7 +48,6 @@ def donate(request, campaign_id):
             return redirect(checkout_session_url)
     else:
         form = DonationAmountForm()
-    
     return render(request, 'donation/donate.html', {'form': form, 'campaign': campaign})
 
 

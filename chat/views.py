@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from chat.models import Room, Message
+from .models import Room, Message
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404

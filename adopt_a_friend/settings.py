@@ -27,7 +27,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "verify_email.apps.VerifyEmailConfig",
-    'django_browser_reload',
     'main',
     'users',
     'videochat',

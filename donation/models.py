@@ -38,13 +38,6 @@ class Donation(models.Model):
     campaign = models.ForeignKey(FundraisingCampaign, null=False, blank=False, on_delete=models.CASCADE)
     user = models.ForeignKey(Users, null=False, blank=False, on_delete=models.CASCADE)
     donationAmount = models.DecimalField(max_digits=8, null=False, decimal_places=2)
-
-    # def save(self, *args, **kwargs):
-    #     # Add two zeros to the end of donationAmount for centavos
-    #     self.donationAmount *= 100  # Multiply by 100 to add two zeros
-    #     self.donationAmount = round(self.donationAmount)  # Round to avoid floating-point precision issues
-
-    #     super(Donation, self).save(*args, **kwargs)
         
 class Payment(models.Model):
     checkout_session_id = models.CharField(max_length=150,primary_key=True, unique=True)
