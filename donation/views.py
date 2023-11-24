@@ -69,7 +69,9 @@ def create_checkout_session(donationId, donationAmount):
                     }
                 ],
                 "payment_method_types": ["gcash", "paymaya", "card"],
-                "reference_number": f"{donationId}"
+                "reference_number": f"{donationId}",
+                "success_url":"https://adoptafriend.up.railway.app/donate/donation_successful/ ",
+                "cancel_url": "https://adoptafriend.up.railway.app/donation_page/"
             }
         }
     }
@@ -91,3 +93,6 @@ def create_checkout_session(donationId, donationAmount):
         
     return checkout_session_url
 
+@login_required
+def success(request):
+    return render(request, 'donation/success.html')
