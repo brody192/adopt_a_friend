@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Users, Profile, Preference
+from .models import Users, Preference
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.exceptions import ValidationError
 
@@ -100,26 +100,21 @@ class UserUpdateForm(forms.ModelForm):
             'home_address', 
             'contact_num',
             'user_bio',
+            'image',
         )
 
         widgets = {
-            'home_address' : forms.TextInput(attrs={'class': 'w-full px-6 py-3 mb-2 rounded-lg font-medium'}), 
-            'contact_num' : forms.TextInput(attrs={'class': 'w-full px-6 py-3 mb-2 rounded-lg font-medium'}), 
-            'user_bio' : forms.Textarea(attrs={'class': 'w-full px-6 py-3 mb-2 rounded-lg font-medium'}), 
+            'home_address' : forms.TextInput(attrs={'class': 'mt-2 border-2 border-black w-full px-6 py-3 mb-2 rounded-lg font-medium'}), 
+            'contact_num' : forms.TextInput(attrs={'class': 'mt-2 border-2 border-black w-full px-6 py-3 mb-2 rounded-lg font-medium'}), 
+            'user_bio' : forms.Textarea(attrs={'class': 'mt-2 border-2 border-black w-full px-6 py-3 mb-2 rounded-lg font-medium'}), 
         }
 
         labels = {
-            'home_address': 'Home Address:',  
-            'contact_num': 'Contact Number:',
-            'user_bio': 'User Bio:',
+            'home_address': 'Edit Home Address:',  
+            'contact_num': 'Edit Contact Number:',
+            'user_bio': 'Edit User Bio:',
+            'image' : 'Edit Profile Picture:'
         }
-    
-class ProfilePictureUpdateForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = (
-            'image',
-        )
 
 class PreferenceForm(forms.ModelForm):
     class Meta:

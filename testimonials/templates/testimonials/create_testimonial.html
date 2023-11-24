@@ -34,19 +34,15 @@
     <div class="mt-2 mx-60 px-20 py-8 rounded-2xl mb-12 bg-white shadow-lg">
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
+            <p class="text-3xl font-bold" style="font-family: 'Imprima';">Testimonial</p>
+            <p class="text-md pb-4" style="font-family: 'Imprima';">Write your success story below:</p>
+            <p class="border-b-2 mb-6 border-black"></p>
             <fieldset style="font-family: Imprima;">
-                <p class="text-3xl font-bold" style="font-family: 'Imprima';">Update Profile Information</p>
-                <p class="text-md pb-4" style="font-family: 'Imprima';">Enter your new information below:</p>
-                <p class="border-b-2 mb-6 border-black"></p>
-                {{update_user_form.as_p}}
-                <p class="text-3xl mt-8 font-bold" style="font-family: 'Imprima';">Update Preference</p>
-                <p class="text-md pb-4" style="font-family: 'Imprima';">Enter your new preference in pet:</p>
-                <p class="border-b-2 mb-6 border-black"></p>
-                {{preference_form.as_p}}
+                {{ form.as_p }}
             </fieldset>
             <div class="flex justify-end">
                 <button type="submit" class="font-semibold text-white px-9 py-2 rounded-md bg-amber-900 hover:bg-yellow-800">
-                    Update Profile
+                    Submit
                 </button>
             </div>
         </form>

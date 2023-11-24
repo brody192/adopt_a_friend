@@ -6,6 +6,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('', index, name='index'),
+    path('', include('testimonials.urls')),
     path('about/', about, name='about'),
     path('admin/', admin.site.urls),
     path('', include('videochat.urls')),
@@ -15,7 +16,7 @@ urlpatterns = [
     path('', include("staff.urls")),
     path('', include("donation.urls")),
     path('', include("videochat.urls")),
-    path('', include('chat.urls'))
+    path('', include('chat.urls')),
 ]     
 
 if settings.DEBUG:

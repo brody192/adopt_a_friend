@@ -153,6 +153,7 @@ class Users(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     slug = models.SlugField(unique=True, blank=True)
+    image = models.ImageField(default='static/default.png', upload_to='static/profile_pics')
 
     objects = CustomAccountManager()
 
@@ -176,44 +177,6 @@ class Users(AbstractBaseUser, PermissionsMixin):
         self.slug = slugify(f"{self.first_name} {self.last_name}")
         super(Users, self).save(*args, **kwargs)
 
-        # CURRENT/GOAL 1000/10000
-
-class Profile(models.Model):
-    user = models.OneToOneField(Users, on_delete=models.CASCADE)
-    image = models.ImageField(default='static/default.png', upload_to='static/profile_pics')
-
-    def __str__(self):
-        return f'{self.user.first_name} Profile'
-    
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        img = Image.open(BytesIO(self.image.read()))
-
-        if img.height > 224 or img.width > 224:
-            output_size = (224, 224)
-            img.thumbnail(output_size)
-
-            # Create an in-memory file-like object to save the image back to S3
-            in_memory_file = BytesIO()
-            img.save(in_memory_file, format='JPEG')
-
-            # Set the file pointer to the beginning of the file
-            in_memory_file.seek(0)
-
-            # Update the image field with the modified image
-            self.image = InMemoryUploadedFile(
-                in_memory_file,          # file
-                'ImageField',            # field_name
-                f"{self.user.username}_profile.jpg",  # file name
-                'image/jpeg',            # content_type
-                in_memory_file.tell,     # size
-                None                      # content_type_extra
-            )
-
-            # Save the changes back to the storage
-            super(Profile, self).save(*args, **kwargs)
-
 class Preference(models.Model):
     
     preferenceId = models.CharField(max_length=10, default=generate_preference_key, primary_key=True, unique=True)
@@ -227,4 +190,3 @@ class Preference(models.Model):
     preferredSpayedorNeutered = models.BooleanField()
     preferredHealthCondition = models.CharField(max_length=30, null=False, choices=HEALTH_CONDITIONS, default="")
     preferredPersonality = models.CharField(max_length=50, choices=PERSONALITY_CHOICES, blank=False, null=False, default="")
-    

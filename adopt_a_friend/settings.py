@@ -35,7 +35,8 @@ INSTALLED_APPS = [
     'staff',
     'donation',
     'django_social_share',
-    'chat'
+    'chat',
+    'testimonials'
 ]
 
 MIDDLEWARE = [
@@ -78,9 +79,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'railway',
         'USER': 'postgres',
-        'PASSWORD': 'gbb-ad53-BD2A4cE616DCBfbb54D51gC',
+        'PASSWORD': 'fc1AbfGD1afb*c14C64a2dE63AcffF23',
         'HOST': 'monorail.proxy.rlwy.net',
-        'PORT': '40606',
+        'PORT': '15663',
     }
 }
 

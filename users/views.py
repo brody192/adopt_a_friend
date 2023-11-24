@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from django.contrib.auth import login as auth_login, logout
-from .forms import UsersForm, LoginForm, ProfilePictureUpdateForm, UserUpdateForm, PreferenceForm
+from .forms import UsersForm, LoginForm, UserUpdateForm, PreferenceForm
 from verify_email.email_handler import send_verification_email
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user
@@ -92,44 +92,29 @@ def profile(request, slug, id):
 @cache_page(60 * 2)
 def update_profile(request, slug, id):
     user = get_object_or_404(Users, slug=slug, id=id)
-    
+    preference, created = Preference.objects.get_or_create(adopter=user)
+
     if request.method == 'POST':
-        update_user_form = UserUpdateForm(request.POST, instance=request.user)
-        update_profile_form = ProfilePictureUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        
-        if update_user_form.is_valid() and update_profile_form.is_valid():
-            # Get the previous profile picture
-            previous_picture = user.profile.image
-            # Check if the previous picture is the default one
-            is_default_picture = str(previous_picture) == 'default.png'
+        # Update user profile form with both request.POST and request.FILES
+        update_user_form = UserUpdateForm(request.POST, request.FILES, instance=request.user)
+        # Update preference form
+        preference_form = PreferenceForm(request.POST, instance=preference)
 
-            # Check if a new image has been provided
-            new_profile_picture = update_profile_form.cleaned_data.get('image')
-
-            # If a new picture is provided and the previous one is not the default
-            if new_profile_picture and not is_default_picture:
-                # Delete the previous profile picture if it is not the default one
-                full_path = os.path.join(settings.MEDIA_ROOT, str(previous_picture))
-                if os.path.exists(full_path):
-                    os.remove(full_path)
-
-            # Save the updated user form
+        if update_user_form.is_valid() and preference_form.is_valid():
             update_user_form.save()
-            # Save the updated profile form
-            profile_instance = update_profile_form.save(commit=False)
-            profile_instance.user = request.user
-            profile_instance.save()
-
-            messages.success(request, 'Profile updated successfully!')
+            preference_form.save()
+            messages.success(request, 'Profile and preferences updated successfully!')
             return redirect(user.get_absolute_url())
-        
+
     else:
+        # Initialize user profile form with user's data
         update_user_form = UserUpdateForm(instance=request.user)
-        update_profile_form = ProfilePictureUpdateForm(instance=request.user.profile)
-    
+        # Initialize preference form with user's preference data
+        preference_form = PreferenceForm(instance=preference)
+
     context = {
         'update_user_form': update_user_form,
-        'update_profile_form': update_profile_form,
+        'preference_form': preference_form,
         'user': user,
     }
 

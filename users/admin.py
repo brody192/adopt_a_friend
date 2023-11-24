@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Users, Profile, Preference
+from .models import Users, Preference
 from django.contrib.auth.admin import UserAdmin
 from django.forms import TextInput, Textarea 
 
@@ -42,5 +42,4 @@ class UserAdminConfig(UserAdmin):
     prepopulated_fields = {"slug": ("first_name","last_name")}  # new
 
 admin.site.register(Users, UserAdminConfig)
-admin.site.register(Profile)
 admin.site.register(Preference)

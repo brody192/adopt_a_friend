@@ -1,0 +1,43 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %} Testimonials {% endblock %}
+
+{% block scripts %} {% endblock %}
+
+{% block content %}
+
+
+<div class="mx-36 my-20 text-amber-900" style="font-family: 'Imprima', sans-serif;">
+    <h1 class="text-shadows" style="font-size: 52px; font-family: 'Nerko One', cursive; color: rgb(120 53 15); ">Testimonials</h1>
+    <p class="">Posted here are the success stories of people who have experienced the joy of adopting a pet through our this platform and at the animal shelter. These heartwarming tales showcase the transformative power of pet adoption, illustrating the incredible bonds formed between humans and their newfound animal companions. Join us in celebrating these wonderful success stories that highlight the positive impact of giving a loving home to a furry friend.</p>
+    <p class="border-b-2 mb-6 mt-6 border-amber-900"></p>
+    <div class="grid grid-cols-3 my-16 gap-x-8">
+        {% if testimonials %}
+    {% for testimonial in testimonials %}
+    <div class="max-w-sm bg-white border rounded-lg shadow">
+        <a href="#">
+            <img class="rounded-t-lg" src="{{ testimonial.image.url }}" alt="" />
+        </a>
+        <div class="p-5">
+            <a href="#">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">{{ testimonial.caption }}</h5>
+            </a>
+            <p class="mb-3 font-normal text-gray-700">{{ testimonial.testimonial|truncatechars:75 }}</p>
+            <a href="{% url 'detail' testimonial_id=testimonial.id %}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-amber-900 rounded-lg hover:bg-amber-800 focus:ring-4 focus:outline-none focus:ring-amber-300">
+                Read more
+                 <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    {% endfor %}
+    {% else %}
+        <p class="my-32 text-3xl font-bold">No testimonials available.</p>
+    {% endif %}
+    </div>
+</div>
+
+{% endblock %}

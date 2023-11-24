@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %} {{testimonial.caption}} {% endblock %}
+
+{% block scripts %} {% endblock %}
+
+{% block content %}
+
+<div class="mx-52 my-20" style="font-family: 'Imprima', sans-serif;">
+    <h1 class="font-bold text-amber-900" style="font-size: 52px; font-family: 'Imprima';">{{testimonial.caption}}</h1>
+    <p class="text-md">by {{testimonial.user.first_name}} {{testimonial.user.last_name}} </p>
+    <p class="text-md">Created on {{testimonial.created_at}}</p>
+    <p class="border-b-2 mb-12 mt-6 border-amber-900"></p>
+    <div class="w-full rounded-lg " style="background-image: url('{{ testimonial.image.url }}'); background-size: cover; height: 500px;">  </div>
+    <div class="my-12 py-8 px-8 bg-white rounded-lg">
+        <p class="text-lg">
+            {{testimonial.testimonial}}
+        </p>
+    </div>
+    
+</div>
+
+
+{% endblock %}
