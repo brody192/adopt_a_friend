@@ -161,7 +161,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MAX_RETRIES = 6
 
-HTML_MESSAGE_TEMPLATE = "users/email.html"
+# HTML_MESSAGE_TEMPLATE = "users/email.html"
 
 #VERIFICATION_SUCCESS_TEMPLATE = "users/new_email.html"
 
