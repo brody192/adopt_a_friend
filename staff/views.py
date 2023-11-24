@@ -237,6 +237,128 @@ def review_application(request, application_id):
     return render(request, 'staff/review_application.html', context)
 
 
+def generate_campaign_data_pdf(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="pet_data_report.pdf"'
+    buffer = BytesIO()
+    pdf_doc = SimpleDocTemplate(buffer, pagesize=landscape(legal))
+
+    title_for_pets = "Pet Information"
+    title_for_medical = "Pet Medical Information"
+    report_title = "Pet Report"
+    report_description = "This file contains a comprehensive report about the information of pets along with their medical information. The information listed below are from the adoptable pets in Quezon City Animal Care and Adoption Center's animal shelter."
+    system_generated_report = "This is a system generated report."
+
+    #PET
+    pet_data = []
+    pet_data.append([
+        'Pet ID',
+        'Pet Name',
+        'Animal Type',
+        'Breed',
+        'Pet Age',
+        'Pet Gender',
+        'Pet Size',
+        'Pet Color',
+        'Pet Personality',
+        'Date Acquired',
+        'Is the Pet Trained?'
+    ])
+
+    for pet in Pet.objects.all():
+        pet_data.append([
+            pet.petId,
+            pet.petName,
+            pet.animalType,
+            pet.breed,
+            pet.petAge,
+            pet.petGender,
+            pet.petSize,
+            pet.petColor,
+            pet.petPersonality,
+            pet.dateAcquired,
+            pet.isTrained,
+        ])
+
+    
+    #PET MEDICAL
+    pet_medical_data = []
+
+    pet_medical_data.append([
+        'Pet Name',
+        'Weight',
+        'Is the Pet Vaccinated?',
+        'Is the Pet Neutured/Spayed?',
+        'Health Condition',
+        'Disease'
+    ])
+
+    for pet_medical in PetMedical.objects.all():
+        pet_medical_data.append([
+            pet_medical.petId.petName,
+            pet_medical.petWeight,
+            pet_medical.isVaccinated,
+            pet_medical.isNeutered_or_Spayed,
+            pet_medical.healthCondition,
+            pet_medical.disease,
+        ])
+    
+    pet_table = create_table(pet_data, Pet._meta.fields, "Pet Data")
+    pet_medical_table = create_table(pet_medical_data, PetMedical._meta.fields, "Pet Medical Data")
+
+    styles = getSampleStyleSheet()
+    normal_style = styles['Normal']
+    
+    # Create a style with center alignment
+    center_style = ParagraphStyle(
+        'Centered',
+        parent=normal_style,
+        alignment=TA_CENTER,
+        fontSize = 14,
+        spaceBefore=50,  # Adjust the top padding
+        spaceAfter=30    # Adjust the bottom padding
+    )
+
+    style_for_report_title = ParagraphStyle(
+        'Centered',
+        fontSize = 30,
+        parent=normal_style,
+        spaceBefore=0,  # Adjust the top padding
+        spaceAfter=30    # Adjust the bottom padding
+    )
+
+    style_for_report_description = ParagraphStyle(
+        'Centered',
+        fontSize = 12,
+        parent=normal_style,
+        spaceBefore=0,  # Adjust the top padding
+        spaceAfter=30,    # Adjust the bottom padding
+    )
+
+    style_for_system_generated_message = ParagraphStyle(
+        'Centered',
+        fontSize = 12,
+        parent=normal_style,
+        spaceBefore=50,  # Adjust the top padding
+        spaceAfter=30,    # Adjust the bottom padding
+        alignment = TA_CENTER
+    )
+
+    centered_title_for_pets = Paragraph(title_for_pets, center_style)
+    centered_title_for_medical = Paragraph(title_for_medical, center_style)
+    report_title_title = Paragraph(report_title, style_for_report_title)
+    description = Paragraph(report_description, style_for_report_description)
+    system_generated_message = Paragraph(system_generated_report, style_for_system_generated_message)
+
+    pdf_elements = [report_title_title, description ,centered_title_for_pets, pet_table, centered_title_for_medical, pet_medical_table, system_generated_message]
+    pdf_doc.build(pdf_elements)
+
+    pdf_value = buffer.getvalue()
+    buffer.close()
+    response.write(pdf_value)
+
+    return response
+
 def generate_pet_data_pdf(request):
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="pet_data_report.pdf"'

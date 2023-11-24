@@ -72,7 +72,7 @@ let leaveAndRemoveLocalStream = async () => {
     }
 
     await client.leave();
-    window.open('/lobby/', '_self');
+    window.open('/', '_self');
 };
 
 let toggleCamera = async (e) => {
