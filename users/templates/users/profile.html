@@ -165,7 +165,7 @@
         <p class="my-3 border-t-2 border-amber-900"></p>
         {% for application in applications %}
         <div class="h-52 w-full grid grid-cols-3 rounded-md shadow-lg my-10" style="background-color: #f89651;">
-            <div class="bg-white h-full w-full py-30 rounded-l-md" style="background-image: url('{{ application.pet.petimage_set.first.petImage.url }}'); background-size: cover;">
+            <div class="bg-white h-52 w-full py-30 rounded-l-md" style="background-image: url('{{ application.pet.petimage_set.first.petImage.url }}'); background-size: cover;">
                 {% if application.status == "Pending" %}
                 <div class="w-32 my-2.5 mx-2.5">
                     <div class="bg-yellow-500 rounded-md text-gray-600 py-2 px-5">
@@ -223,6 +223,7 @@
                     <p><b>Online Interview Time: </b></p>
                     <p>&emsp;&emsp;{{application.interviewTime}}</p>
                 </div>
+                
                 <div class="flex justify-end">
                     <div class="pt-10">
                         <div class="flex gap-2">
@@ -238,7 +239,7 @@
                             </div>
                 
                             {% if application.status == "Interviewing" and application.modeOfInterview == "Online" %}
-                            <div class="py-2 px-3 bg-white rounded-md text-gray-600 hover:scale-110 duration-200 hover:cursor-pointer">
+                            <div class="py-2 px-5 bg-white rounded-md text-gray-600 hover:scale-110 duration-200 hover:cursor-pointer">
                                 <a href="{% url 'lobby' applicationId=application.applicationId %}">
                                     <div class="flex gap-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6" viewBox="0 0 256 256">
@@ -251,7 +252,7 @@
                             {% endif %}
 
                             {% if application.status == "Completed"%}
-                            <div class="py-2 px-3 bg-white rounded-md text-gray-600 hover:scale-110 duration-200 hover:cursor-pointer">
+                            <div class="py-2 px-5 bg-white rounded-md text-gray-600 hover:scale-110 duration-200 hover:cursor-pointer">
                                 <a href="{% url 'chat' applicationId=application.applicationId %}">
                                     <div class="flex gap-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6" viewBox="0 0 256 256">
@@ -260,12 +261,11 @@
                                         <button class="text-sm text-green-700">Contact Staff</button> 
                                     </div>
                                 </a>
+                            </div>
+                            <div class="py-2 px-5 bg-white rounded-md text-gray-600 hover:scale-110 duration-200 hover:cursor-pointer">
                                 <a href="{% url 'create_testimonial' %}">
-                                    <div class="flex gap-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6" viewBox="0 0 256 256">
-                                            <path fill="currentColor" d="M212 82a26 26 0 1 0 26 26a26 26 0 0 0-26-26Zm0 40a14 14 0 1 1 14-14a14 14 0 0 1-14 14ZM70 108a26 26 0 1 0-26 26a26 26 0 0 0 26-26Zm-26 14a14 14 0 1 1 14-14a14 14 0 0 1-14 14Zm48-36a26 26 0 1 0-26-26a26 26 0 0 0 26 26Zm0-40a14 14 0 1 1-14 14a14 14 0 0 1 14-14Zm72 40a26 26 0 1 0-26-26a26 26 0 0 0 26 26Zm0-40a14 14 0 1 1-14 14a14 14 0 0 1 14-14Zm22.15 104.61a37.32 37.32 0 0 1-17.82-22.33a42 42 0 0 0-80.66 0a37.26 37.26 0 0 1-17.77 22.3A38 38 0 0 0 88 222a37.58 37.58 0 0 0 14.76-3a66.14 66.14 0 0 1 50.41 0a37.66 37.66 0 0 0 14.83 3a38 38 0 0 0 18.15-71.39ZM168 210a25.93 25.93 0 0 1-10.21-2.08a78.15 78.15 0 0 0-59.65 0a26 26 0 0 1-22.46-46.82a49.28 49.28 0 0 0 23.51-29.48a30 30 0 0 1 57.62 0a49.27 49.27 0 0 0 23.57 29.5A26 26 0 0 1 168 210Z"/>
-                                        </svg>                                            
-                                        <button class="text-sm text-green-700">Write Success Story</button> 
+                                    <div class="flex gap-2">                                           
+                                        <button class="text-sm text-green-700 text-center">Testimonials</button> 
                                     </div>
                                 </a>
                             </div>
