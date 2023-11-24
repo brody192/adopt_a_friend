@@ -1,5 +1,4 @@
 {% load static %}
-{% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room | Adopt A Friend</title>
     <link rel="stylesheet" href="{% static 'styles/main.css' %}">
-    {% tailwind_css %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.css" rel="stylesheet" />
 </head>
 <body style="background-image: url('/static/image/staffbg.png'); background-size: cover;">
     <main>

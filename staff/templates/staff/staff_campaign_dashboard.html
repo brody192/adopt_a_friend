@@ -6,6 +6,13 @@
 {% block image %} <img src="{% static '\image\dashboard.png' %}" alt="" class="absolute"> {% endblock %}
 
 {% block content %}
+
+<a href="{% url 'staff_dashboard' %}" class="relative ml-40 mt-10">
+    <button class="shadow-inner transition ease-in-out delay-150 font-semibold text-white px-9 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;">
+        Dashboard                   
+    </button>
+</a>
+
 <div>
     <h1 class="relative ml-40 mt-10 text-7xl text-shadows text-gray-50 font-bold" style="font-family: 'Imprima'"> 
         Campaign Dashboard 
