@@ -12,7 +12,6 @@ from django.views.decorators.cache import cache_page
 
 
 # Create your views here.
-@cache_page(60 * 2)
 def donation_page(request):
     campaigns = list(FundraisingCampaign.objects.all())  # Convert QuerySet to a list
     random.shuffle(campaigns)
@@ -20,7 +19,6 @@ def donation_page(request):
     context = {'featured_campaign': featured_campaign, 'campaigns': campaigns}
     return render(request, 'donation/donation_page.html', context)
 
-@cache_page(60 * 2)
 def campaign_details(request, campaign_id):
     campaign = get_object_or_404(FundraisingCampaign, campaignId=campaign_id)
     recent_donors = Donation.objects.filter(campaign=campaign).order_by('-donationId')[:5]
@@ -32,7 +30,6 @@ def campaign_details(request, campaign_id):
     })
 
 @login_required
-@cache_page(60 * 2)
 def donate(request, campaign_id):
     campaign = get_object_or_404(FundraisingCampaign, campaignId=campaign_id)
     if request.method == 'POST':

@@ -40,7 +40,6 @@ def create_user(request):
         })
 
 @unauthenticated_user
-@cache_page(60 * 2)
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request, request.POST)
@@ -63,7 +62,6 @@ def sent_email(request):
     return render(request, 'users/sent_email.html')
 
 @login_required
-@cache_page(60 * 2)
 def profile(request, slug, id):
     user = get_object_or_404(Users, slug=slug)
 
@@ -89,7 +87,6 @@ def profile(request, slug, id):
     return render(request, 'users/profile.html', context)
 
 @login_required
-@cache_page(60 * 2)
 def update_profile(request, slug, id):
     user = get_object_or_404(Users, slug=slug, id=id)
     preference, created = Preference.objects.get_or_create(adopter=user)
@@ -107,9 +104,7 @@ def update_profile(request, slug, id):
             return redirect(user.get_absolute_url())
 
     else:
-        # Initialize user profile form with user's data
         update_user_form = UserUpdateForm(instance=request.user)
-        # Initialize preference form with user's preference data
         preference_form = PreferenceForm(instance=preference)
 
     context = {

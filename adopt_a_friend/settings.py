@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ko3&^p3c-^^41_c#r$#s-7q+_onf543=(676g#dx#ya0_@!sji'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['adoptafriend.up.railway.app', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS=['https://adoptafriend.up.railway.app']

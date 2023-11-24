@@ -11,7 +11,6 @@ from django.views.decorators.cache import cache_page
 
 # Create your views here.
 
-@cache_page(60 * 3)
 def pet_profile(request, petId, slug):
     pet = get_object_or_404(Pet, petId=petId, slug=slug)
     medical = get_object_or_404(PetMedical, petId=pet)
@@ -25,7 +24,6 @@ def pet_profile(request, petId, slug):
 
     return render(request, 'pets/pet_profile.html', context)
 
-@cache_page(60 * 3)
 def pet_page(request):
     query = request.GET.get('q')
     pets = Pet.objects.all().order_by('petId')
@@ -54,7 +52,6 @@ def pet_page(request):
     return render(request, 'pets/adoptme.html', {'pets': pets, 'recommended_pets': recommended_pets})
 
 @login_required
-@cache_page(60 * 3)
 def application(request, slug):
     pet = get_object_or_404(Pet, slug=slug)
     user = request.user
@@ -127,16 +124,13 @@ def application(request, slug):
     return render(request, 'pets/application.html', context)
 
 @login_required
-@cache_page(60 * 3)
 def submitted(request):
     return render(request, 'pets/application_submitted_successfuly.html')
 
 @login_required
-@cache_page(60 * 3)
 def submission_exceeded(request):
     return render(request, 'pets/application_limit_exceeded.html')
 
 @login_required
-@cache_page(60 * 3)
 def application_duplication(request):
     return render(request, 'pets/application_already_submitted.html')
