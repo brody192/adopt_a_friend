@@ -6,7 +6,8 @@ from django.utils.text import slugify
 from django.urls import reverse
 from PIL import Image
 from datetime import date
-
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 COLOR_CHOICES = (
     ('Black', 'Black'),
@@ -187,12 +188,31 @@ class Profile(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
-        img = Image.open(self.image.path)
+        img = Image.open(BytesIO(self.image.read()))
 
         if img.height > 224 or img.width > 224:
-            output_size = (224,224)
+            output_size = (224, 224)
             img.thumbnail(output_size)
-            img.save(self.image.path)
+
+            # Create an in-memory file-like object to save the image back to S3
+            in_memory_file = BytesIO()
+            img.save(in_memory_file, format='JPEG')
+
+            # Set the file pointer to the beginning of the file
+            in_memory_file.seek(0)
+
+            # Update the image field with the modified image
+            self.image = InMemoryUploadedFile(
+                in_memory_file,          # file
+                'ImageField',            # field_name
+                f"{self.user.username}_profile.jpg",  # file name
+                'image/jpeg',            # content_type
+                in_memory_file.tell,     # size
+                None                      # content_type_extra
+            )
+
+            # Save the changes back to the storage
+            super(Profile, self).save(*args, **kwargs)
 
 class Preference(models.Model):
     

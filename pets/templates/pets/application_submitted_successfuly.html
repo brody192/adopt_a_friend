@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %} Application Submitted Successfully {% endblock %}
+
+{% block scripts %} {% endblock %}
+
+{% block content %}
+<div class="my-52"  style="font-family: 'Imprima';">
+    <div class="text-center">
+        <h1 class="text-4xl font-bold text-amber-900 my-2">Application Submitted Succesfully!</h1>
+        <p class="text-lg text-amber-900">Hey human! You have successfully submitted an application for this pet. Please wait for your application to be evaluated by our staff.</p>
+    </div>
+    <div class="flex justify-center my-6">
+        <a href="{% url 'pet_page' %}">
+            <button type="" class="shadow-inner transition ease-in-out delay-150 font-semibold text-white px-5 py-2 rounded-md hover:-translate-y-1 hover:scale-100 duration-300 bg-amber-900">Our Animals</button>
+        </a>
+    </div>
+</div>
+{% endblock %}
