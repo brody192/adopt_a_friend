@@ -28,11 +28,6 @@ class FundraisingCampaign(models.Model):
     campaignPurpose = models.TextField(max_length=200, null=False, blank=False, default="")
     campaignImage = models.ImageField(upload_to='static/image/campaign_img')
 
-class Message(models.Model):
-    from_user = models.ForeignKey(Users, null=False, blank=False, on_delete=models.CASCADE)
-    for_campaign = models.ForeignKey(FundraisingCampaign, null=False, blank=False, on_delete=models.CASCADE)
-    message = models.TextField(max_length=250, null=False, blank=False)
-
 class Donation(models.Model):
     donationId = models.CharField(max_length=15, default=generate_donation_key, primary_key=True, unique=True)
     campaign = models.ForeignKey(FundraisingCampaign, null=False, blank=False, on_delete=models.CASCADE)
@@ -45,3 +40,4 @@ class Payment(models.Model):
     checkout_url = models.URLField()
     amount = models.DecimalField(max_digits=8, null=False, decimal_places=2)
     processed = models.BooleanField(default=False)
+

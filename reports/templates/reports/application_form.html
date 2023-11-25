@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Form</title>
+</head>
+<body>
+    <h1>Application Form</h1>
+    <h2>Applicant Information</h2>
+    <p>Application ID: {{ application.applicationId }}</p>
+    <p>Adopter Name: {{ application.adopterFirstName }} {{ application.adopterLastName }}</p>
+    <!-- Add more applicant information as needed -->
+
+    <h2>Interviews</h2>
+    {% for interview in interviews %}
+        <p>Date: {{ interview.interviewDate }}, Time: {{ interview.interviewTime }}, Interviewed By: {{ interview.interviewedBy }}</p>
+    {% endfor %}
+
+    <h2>Turnover Information</h2>
+    <p>Turnover Date: {{ turnover.turnoverDate }}, Turnover Time: {{ turnover.turnoverTime }}</p>
+
+    <h2>House Pictures</h2>
+    {% for housepicture in house_pictures %}
+        <img src="{{ housepicture.housePicture.url }}" alt="House Picture">
+    {% endfor %}
+
+    <h2>ID Pictures</h2>
+    {% for idpicture in id_pictures %}
+        <img src="{{ idpicture.validIdPicture.url }}" alt="ID Picture">
+    {% endfor %}
+
+    <h2>Condo Agreement</h2>
+    {% if condo_agreement %}
+        <img src="{{ condoagreement.condoAgreement.url }}" alt="Condo Agreement">
+    {% endif %}
+</body>
+</html>

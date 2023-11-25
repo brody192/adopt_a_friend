@@ -12,6 +12,16 @@
         Dashboard                   
     </button>
 </a>
+<a href="{% url 'staff_campaign_dashboard' %}" class="relative ml-5 mt-10">
+    <button class="shadow-inner transition ease-in-out delay-150 font-semibold text-white px-9 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;">
+        Fundraising Campaign                   
+    </button>
+</a>
+<a href="{% url 'staff_pet_dashboard' %}" class="relative ml-5 mt-10">
+    <button class="shadow-inner transition ease-in-out delay-150 font-semibold text-white px-9 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;">
+        Pet                  
+    </button>
+</a>
 
 <div>
     <h1 class="relative ml-40 mt-10 text-7xl text-shadows text-gray-50 font-bold" style="font-family: 'Imprima'"> 
@@ -27,7 +37,7 @@
 </div>
 
 <div class="mt-16 mb-16 py-12 px-10 mx-40 bg-white rounded-3xl relative shadow-lg" style="font-family: 'Imprima';">
-    <div class="flex justify-between">
+    <!-- <div class="flex justify-between">
         <div class="flex">            
         </div>
 
@@ -35,14 +45,14 @@
             <input type="text" name="q" placeholder="Search pets..." class="p-2 border border-gray-300 rounded">
             <button type="submit" class="shadow-inner transition ease-in-out delay-150 font-semibold text-white px-5 py-2 rounded-md hover:-translate-y-1 hover:scale-110 duration-300" style="background-color: #f89651;">Search</button>
         </form>
-    </div>
+    </div> -->
     
     <!-- CARD -->
     
     <div class="grid grid-cols-2 gap-x-6 justify-center mx-auto max-w-screen-xl">
         {% for application in application %}
     <div class="w-full h-60 p-3 rounded-2xl shadow-lg mt-6 grid grid-cols-2 bg-white">
-        <div class="h-full bg-gray-200 rounded-xl" style="background-image: url('{{ application.picture.url }}'); background-size: cover;"></div>
+        <div class="h-full bg-gray-200 rounded-xl" style="background-image: url('{{ application.user.image.url }}'); background-size: cover;"></div>
         <div class="ml-5 flex flex-col">
         {% if application.status == "Pending" %}
             <div class="bg-yellow-500 rounded-md text-gray-600 py-2 px-5">
@@ -75,9 +85,9 @@
         {% endif %}
                 <div class="my-4 flex flex-col justify-between">
                     <h1 class=""><b> Application ID: </b>{{application.applicationId}}</h1>
-                    <h1 class=""><b> Applicant: </b>{{ application.adopteeFirstName }} {{ application.adopteeLastName }}</h1>
+                    <h1 class=""><b> Applicant: </b>{{ application.adopterFirstName }} {{ application.adopteeLastName }}</h1>
                     <h1 class=""><b> Adoptee: </b>{{ application.pet.petName }}</h1>
-                    <h1 class=""><b> Contact Number: </b>{{ application.adopteeContactNum }}</h1>
+                    <h1 class=""><b> Contact Number: </b>{{ application.adopterContactNum }}</h1>
                 </div>
                 {% if application.status == "Completed"%}
                     <div class="flex justify-end">
@@ -94,7 +104,7 @@
                         <div class="py-2 px-3 border-green-700 border-2 rounded-md text-gray-600 hover:scale-110 duration-200 hover:cursor-pointer">
                             <a href="{% url 'review_application' application_id=application.applicationId %}">
                                 <div class="flex gap-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.6 14.521c-2.395 2.521-8.504-3.533-6.1-6.063c1.468-1.545-.19-3.31-1.108-4.609c-1.723-2.435-5.504.927-5.39 3.066c.363 6.746 7.66 14.74 14.726 14.042c2.21-.218 4.75-4.21 2.214-5.669c-1.267-.73-3.008-2.17-4.342-.767Z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 text-green-700" viewBox="0 0 16 16"><path fill="currentColor" fill-rule="evenodd" d="M9 2.5a1 1 0 1 1-2 0a1 1 0 0 1 2 0Zm1.45-.5a2.5 2.5 0 0 0-4.9 0H3a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-2.55ZM8 5H5.5V3.5h-2v11h9v-11h-2V5H8ZM5 7.75A.75.75 0 0 1 5.75 7h4.5a.75.75 0 0 1 0 1.5h-4.5A.75.75 0 0 1 5 7.75Zm.75 1.75a.75.75 0 0 0 0 1.5h4.5a.75.75 0 0 0 0-1.5h-4.5Z" clip-rule="evenodd"/></svg>
                                     <button class="font-semibold text-sm text-green-700">Review</button> 
                                 </div>
                             </a>
@@ -107,7 +117,7 @@
     </div>
     <!-- END CARD -->
 
-        <div class="mt-10 flex justify-center col-span-4">
+        <!-- <div class="mt-10 flex justify-center col-span-4">
             <span class="">
                 {% if pets.has_previous %}
                     <a href="?page=1">
@@ -147,7 +157,7 @@
                     </a>
                 {% endif %}
             </span>
-        </div>
+        </div> -->
     </div>
 </div>
 

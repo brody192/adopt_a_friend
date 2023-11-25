@@ -17,6 +17,7 @@ urlpatterns = [
     path('', include("donation.urls")),
     path('', include("videochat.urls")),
     path('', include('chat.urls')),
+    path('', include('reports.urls', namespace='reports')),
 ]     
 
 if settings.DEBUG:

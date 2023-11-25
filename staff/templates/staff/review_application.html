@@ -40,15 +40,15 @@
         <div class="grid grid-cols-2 gap-x-10 gap-y-4" style="font-family: 'Imprima'; font-size: 18px;">
             <div>
                 <h1>Name of Applicant:</h1>
-                <h1>&emsp;&emsp;&emsp; {{application.adopteeFirstName}} {{application.adopteeLastName}}</h1>
+                <h1>&emsp;&emsp;&emsp; {{application.adopterFirstName}} {{application.adopterLastName}}</h1>
             </div>
             <div>
                 <h1>Contact Number:</h1>
-                <h1>&emsp;&emsp;&emsp; {{application.adopteeContactNum}}</h1>
+                <h1>&emsp;&emsp;&emsp; {{application.adopterContactNum}}</h1>
             </div>
             <div>
                 <h1>Home Address:</h1>
-                <h1>&emsp;&emsp;&emsp; {{application.adopteeHomeAddress}}</h1>
+                <h1>&emsp;&emsp;&emsp; {{application.adopterHomeAddress}}</h1>
             </div>
             <div>
                 <h1>Desired Pet To Adopt:</h1>
@@ -60,7 +60,7 @@
             </div>
             <div>
                 <h1>Download Complete Application:</h1>
-                &emsp;&emsp;&emsp;<a href="{% url 'generate_application_report' application_id=application.applicationId %}" download>Download PDF</a>
+                &emsp;&emsp;&emsp;<a href="{% url 'reports:application_form_pdf' application_id=application.applicationId %}" target="_blank">Download PDF</a>
             </div>
         </div>
 
@@ -68,38 +68,31 @@
         <form action="" method="POST" enctype="multipart/form-data" class="grid grid-cols-2 gap-x-10 gap-y-4" style="font-family: 'Imprima'; font-size: 18px;">
             {% csrf_token %}
             <div>
-                {{form.interviewDate.label_tag}}
-                {{form.interviewDate}}
+                {{ interview_form.interviewDate.label_tag }}
+                {{ interview_form.interviewDate }}
             </div>
             <div>
-                {{form.interviewTime.label_tag}}
-                {{form.interviewTime}}
+                {{ interview_form.interviewTime.label_tag }}
+                {{ interview_form.interviewTime }}
             </div>
             <div>
-                {{form.inPersonVisitDate.label_tag}}
-                {{form.inPersonVisitDate}}
+                {{ turnover_form.turnoverDate.label_tag }}
+                {{ turnover_form.turnoverDate }}
             </div>
             <div>
-                {{form.inPersonVisitTime.label_tag}}
-                {{form.inPersonVisitTime}}
+                {{ turnover_form.turnoverTime.label_tag }}
+                {{ turnover_form.turnoverTime }}
             </div>
             <div>
-                {{form.status.label_tag}}
-                {{form.status}}
-            </div>
-            <div>
-                {{form.modeOfInterview.label_tag}}
-                {{form.modeOfInterview}}
+                {{ status_form.status.label_tag }}
+                {{ status_form.status }}
             </div>
             <div class="col-span-2">
-                {{form.staffComment.label_tag}}
-                {{form.staffComment}}
-            </div>
-            <div></div>
-            <div class="flex justify-end">
-                <button onclick="confirmAction()" type="submit" class="font-semibold text-white px-16 py-3 mt-6 rounded-md bg-amber-900 hover:bg-yellow-800" onclick="confirmAction()">
-                    Submit
-                </button>
+                <div class="flex justify-end">
+                    <button onclick="confirmAction()" type="submit" class="font-semibold text-white px-16 py-3 mt-6 rounded-md bg-amber-900 hover:bg-yellow-800" onclick="confirmAction()">
+                        Submit
+                    </button>
+                </div>
             </div>
         </form>
     </div>

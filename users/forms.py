@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.exceptions import ValidationError
 
 
+
 class UsersForm(UserCreationForm):
     password1 = forms.CharField(
         label="Password",

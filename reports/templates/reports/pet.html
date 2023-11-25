@@ -1,0 +1,81 @@
+<!-- all_pets_information.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Pets Information</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+        @page {
+            size: letter landscape;
+            margin: 2cm;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img src="'/static/image/logo.jpg'" alt="">
+        <h1 style="text-align: center; font-size: 32px; margin-bottom: 0;">Pet Report</h1>
+        <p style="margin-top: 0; text-align: center; font-size: 12px;">This file contains a comprehensive report about the information of pets along with their medical information. The information listed below are from the adoptable
+            pets in Quezon City Animal Care and Adoption Center's animal shelter. </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pet Name</th>
+                    <th>Animal Type</th>
+                    <th>Breed</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Size</th>
+                    <th>Color</th>
+                    <th>Personality</th>
+                    <th>Date Acquired</th>
+                    <th>Trained</th>
+                    <th>Weight</th>
+                    <th>Vaccinated</th>
+                    <th>Neutered or Spayed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pet_info in pets_info %}
+                    <tr>
+                        <td>{{ pet_info.pet.petName }}</td>
+                        <td>{{ pet_info.pet.animalType }}</td>
+                        <td>{{ pet_info.pet.breed }}</td>
+                        <td>{{ pet_info.pet.petAge }}</td>
+                        <td>{{ pet_info.pet.petGender }}</td>
+                        <td>{{ pet_info.pet.petSize }}</td>
+                        <td>{{ pet_info.pet.petColor }}</td>
+                        <td>{{ pet_info.pet.petPersonality }}</td>
+                        <td>{{ pet_info.pet.dateAcquired }}</td>
+                        <td>{% if pet_info.pet.isTrained %}Yes{% else %}No{% endif %}</td>
+                        <td>{{ pet_info.pet_medical.petWeight }}</td>
+                        <td>{% if pet_info.pet_medical.isVaccinated %}Yes{% else %}No{% endif %}</td>
+                        <td>{% if pet_info.pet_medical.isNeutered_or_Spayed %}Yes{% else %}No{% endif %}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</body>
+</html>

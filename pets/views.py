@@ -99,15 +99,14 @@ def application(request, slug):
                 condo_agreement_instance.applicationId = application_instance
                 condo_agreement_instance.save()
 
-            # Redirect to a success page or any other desired page
-            return redirect('submitted')  # Replace 'success_page' with the actual URL or name of the success page
+            return redirect('submitted')  
 
     else:
         # Pass the logged-in user to the form
-        application_form = ApplicationForm(initial={'adopteeFirstName': user.first_name,
-                                                    'adopteeLastName': user.last_name,
-                                                    'adopteeHomeAddress': user.home_address,
-                                                    'adopteeContactNum': user.contact_num})
+        application_form = ApplicationForm(initial={'adopterFirstName': user.first_name,
+                                                    'adopterLastName': user.last_name,
+                                                    'adopterHomeAddress': user.home_address,
+                                                    'adopterContactNum': user.contact_num})
         house_picture_formset = HousePictureFormSet(prefix='house_picture')
         id_picture_formset = IdPictureFormSet(prefix='id_picture')
         condo_agreement_form = CondoAgreementForm()

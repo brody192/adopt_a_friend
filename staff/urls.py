@@ -18,8 +18,4 @@ urlpatterns = [
     path('staff/dashboard/campaigns/delete_campaign/<str:campaign_id>/', views.delete_campaign, name='delete_campaign'),
 
     path('staff/dashboard/applications/review/<str:application_id>/', views.review_application, name='review_application'),
-    path('generate_application_report/<str:application_id>/', views.generate_application_report, name='generate_application_report'),
-
-    path('generate_pet_data_pdf/', views.generate_pet_data_pdf, name='generate_pet_data_pdf'),
-
 ]

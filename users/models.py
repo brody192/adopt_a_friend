@@ -152,7 +152,7 @@ class Users(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(default=timezone.now)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(blank=True)
     image = models.ImageField(default='static/default.png', upload_to='static/profile_pics')
 
     objects = CustomAccountManager()
@@ -188,5 +188,4 @@ class Preference(models.Model):
     preferredSize = models.CharField(max_length=20, choices=PET_SIZE_CHOICES, null=False, blank=False, default="")
     preferredColor = models.CharField(max_length=20, choices=COLOR_CHOICES, null=False, blank=False, default="")
     preferredSpayedorNeutered = models.BooleanField()
-    preferredHealthCondition = models.CharField(max_length=30, null=False, choices=HEALTH_CONDITIONS, default="")
     preferredPersonality = models.CharField(max_length=50, choices=PERSONALITY_CHOICES, blank=False, null=False, default="")

@@ -6,37 +6,52 @@
 {% block content %}
 
 <div class="mx-64 mt-10 mb-20 py-12 px-16 bg-white rounded-3xl shadow-lg">
-  <h1 class=" text-black text-5xl text-center pb-6" style="font-family: 'Imprima'; font-weight: bold;">Application Form</h1>
+  <h1 class="text-black text-5xl text-center pb-6" style="font-family: 'Imprima'; font-weight: bold;">Application Form</h1>
   <form action="" method="POST" enctype="multipart/form-data" class="grid grid-cols-2 gap-x-10 gap-y-4" style="font-family: 'Imprima'; font-size: 18px;">
     {% csrf_token %}
     <div class="col-span-2">
-      <h1 class=" text-black text-2xl" style="font-family: 'Imprima'; font-weight: bold;">Personal Information</h1>
+      <h1 class="text-black text-2xl" style="font-family: 'Imprima'; font-weight: bold;">Personal Information</h1>
       <p class="text-base italic"> Fill up the fields with required personal information. </p>
       <p class="border-b-2 mb-4 mt-2 border-black"></p>
     </div>
     <div>
-      {{ application_form.adopteeFirstName.label_tag }}
-      {{ application_form.adopteeFirstName }}
+      {{ application_form.adopterFirstName.label_tag }}
+      {{ application_form.adopterFirstName }}
+      {% if application_form.adopterFirstName.errors %}
+        <span class="text-red-500">{{ application_form.adopterFirstName.errors.0 }}</span>
+      {% endif %}
     </div>
     <div>
-      {{ application_form.adopteeLastName.label_tag }}
-      {{ application_form.adopteeLastName }}
+      {{ application_form.adopterLastName.label_tag }}
+      {{ application_form.adopterLastName }}
+      {% if application_form.adopterLastName.errors %}
+        <span class="text-red-500">{{ application_form.adopterLastName.errors.0 }}</span>
+      {% endif %}
     </div>
     <div>
-      {{ application_form.adopteeHomeAddress.label_tag }}
-      {{ application_form.adopteeHomeAddress }}
+      {{ application_form.adopterHomeAddress.label_tag }}
+      {{ application_form.adopterHomeAddress }}
+      {% if application_form.adopterHomeAddress.errors %}
+        <span class="text-red-500">{{ application_form.adopterHomeAddress.errors.0 }}</span>
+      {% endif %}
     </div>
     <div>
-      {{ application_form.adopteeContactNum.label_tag }}
-      {{ application_form.adopteeContactNum }}
+      {{ application_form.adopterContactNum.label_tag }}
+      {{ application_form.adopterContactNum }}
+      {% if application_form.adopterContactNum.errors %}
+        <span class="text-red-500">{{ application_form.adopterContactNum.errors.0 }}</span>
+      {% endif %}
     </div>
     <div>
       {{ application_form.preferredModeOfInterview.label_tag }}
       {{ application_form.preferredModeOfInterview }}
+      {% if application_form.preferredModeOfInterview.errors %}
+        <span class="text-red-500">{{ application_form.preferredModeOfInterview.errors.0 }}</span>
+      {% endif %}
     </div>
     <div class="col-span-2">
-      <h1 class=" text-black text-2xl mt-2" style="font-family: 'Imprima'; font-weight: bold;">House Pictures</h1>
-      <p class="text-base italic"> Provide five (5) pictures of your house where the pet are going to stay. </p>
+      <h1 class="text-black text-2xl mt-2" style="font-family: 'Imprima'; font-weight: bold;">House Pictures</h1>
+      <p class="text-base italic"> Provide five (5) pictures of your house where the pet is going to stay. </p>
       <p class="border-b-2 mb-4 mt-2 border-black"></p>
     </div>
     <!-- Display House Picture Formset -->
@@ -44,23 +59,35 @@
     {% for form in house_picture_formset.forms %}
       <div>
         {{ form.as_p }}
+        {% for field in form.visible_fields %}
+          {% if field.errors %}
+            <span class="text-red-500">{{ field.errors.0 }}</span>
+          {% endif %}
+        {% endfor %}
       </div>
     {% endfor %}
 
     <div class="col-span-2 py-4">
-      <h1 class=" text-black text-2xl mt-2" style="font-family: 'Imprima'; font-weight: bold;">Valid IDs</h1>
+      <h1 class="text-black text-2xl mt-2" style="font-family: 'Imprima'; font-weight: bold;">Valid IDs</h1>
       <p class="text-base italic"> Provide two (2) valid IDs. </p>
       <p class="border-b-2 mt-2 border-black"></p>
     </div>
     <!-- Display ID Picture Formset -->
     {{ id_picture_formset.management_form }}
     {% for form in id_picture_formset.forms %}
+      <div>
         {{ form.as_p }}
+        {% for field in form.visible_fields %}
+          {% if field.errors %}
+            <span class="text-red-500">{{ field.errors.0 }}</span>
+          {% endif %}
+        {% endfor %}
+      </div>
     {% endfor %}
 
     <div class="col-span-2 py-4">
-      <h1 class=" text-black text-2xl mt-2" style="font-family: 'Imprima'; font-weight: bold;">Condo Agreement</h1>
-      <p class="text-base italic"> If you live in a condo, please provide a letter or contract that allows you to have a pet in your home. Must be in PDF.</p>
+      <h1 class="text-black text-2xl mt-2" style="font-family: 'Imprima'; font-weight: bold;">Condo Agreement</h1>
+      <p class="text-base italic"> If you live in a condo, please provide a picture of a letter or contract that allows you to have a pet in your home. The letter/contract in the picture should be legible.</p>
       <p class="border-b-2 mt-2 border-black"></p>
     </div>
     <!-- Display Condo Agreement Form -->
@@ -70,9 +97,10 @@
     <!-- Add a submit button -->
     <div class="flex justify-end">
       <button type="submit" class="font-semibold text-white px-16 py-3 mt-6 rounded-md bg-amber-900 hover:bg-yellow-800">
-          Submit Application
+        Submit Application
       </button>
-  </div>
+    </div>
   </form>
 </div>
+
 {% endblock %}

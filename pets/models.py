@@ -66,17 +66,6 @@ PET_SIZE_CHOICES = (
     ('Large', 'Large')
 )
 
-HEALTH_CONDITIONS = (
-    ('Healthy', 'Healthy'),
-    ('With Disease/Illness', 'With Disease/Illness'),
-    ('Chronic Condition', 'Chronic Condition'),
-    ('Under Treatment', 'Under Treatment'),
-    ('Recovering', 'Recovering'),
-    ('Injured', 'Injured'),
-    ('Behavioral Issues', 'Behavioral Issues'),
-    ('Senior Care', 'Senior Care'),
-)
-
 APPLICATION_STATUS = (
     ('Pending', 'Pending'),
     ('Interviewing', 'Interviewing'),
@@ -161,28 +150,36 @@ class PetMedical(models.Model):
     petWeight = models.IntegerField(blank=False, null=False)
     isVaccinated = models.BooleanField()
     isNeutered_or_Spayed = models.BooleanField()
-    healthCondition = models.CharField(max_length=30, null=False, choices=HEALTH_CONDITIONS)
-    disease = models.CharField(max_length=100, null=False)
     comment = models.TextField(max_length=500, blank=True, null=True)
 
 class Application(models.Model):
     applicationId = models.CharField(max_length=10, default=generate_application_key, primary_key=True, unique=True)
     pet = models.ForeignKey(Pet, null=False, on_delete=models.CASCADE)
     user = models.ForeignKey(Users, null=False, on_delete=models.CASCADE)
-    adopteeFirstName = models.CharField(max_length=50, null=False, blank=False)
-    adopteeLastName = models.CharField(max_length=50, null=False, blank=False)
-    adopteeHomeAddress = models.CharField(max_length=300, null=False, blank=False)
-    adopteeContactNum = models.CharField(max_length=15, null=False, blank=False)
+    adopterFirstName = models.CharField(max_length=50, null=False, blank=False)
+    adopterLastName = models.CharField(max_length=50, null=False, blank=False)
+    adopterHomeAddress = models.CharField(max_length=300, null=False, blank=False)
+    adopterContactNum = models.CharField(max_length=15, null=False, blank=False)
     picture = models.ImageField(blank=False, null=False, upload_to='static/application_pics', default="static/default.png")
     status = models.CharField(max_length=50, choices=APPLICATION_STATUS ,null=False, blank=False, default="Pending")
-    preferredModeOfInterview =  models.CharField(max_length=50, choices=INTERVIEW_MODE ,null=False, blank=False, default="")
-    modeOfInterview =  models.CharField(max_length=50, choices=INTERVIEW_MODE ,null=False, blank=False, default="")
-    staffComment = models.TextField(max_length=300, null=False, blank=True, default='')
+    created_at = models.DateTimeField(default=timezone.now)
+    last_accessed_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        # Update last_accessed_at manually before saving
+        self.last_accessed_at = timezone.now()
+        super().save(*args, **kwargs)
+
+class Interview(models.Model):
+    application = models.ForeignKey(Application, null=False, on_delete=models.CASCADE)
     interviewDate = models.DateField(null=True, blank=True)
     interviewTime = models.TimeField(null=True, default=None, blank=True)
-    inPersonVisitDate = models.DateField(null=True, blank=True)
-    inPersonVisitTime = models.TimeField(null=True, default=None, blank=True)
-    created_at = models.DateTimeField(default=timezone.now)
+    interviewedBy = models.ForeignKey(Users, null=False, on_delete=models.CASCADE)
+
+class Turnover(models.Model):
+    application = models.ForeignKey(Application, null=False, on_delete=models.CASCADE)
+    turnoverDate = models.DateField(null=True, blank=True)
+    turnoverTime = models.TimeField(null=True, default=None, blank=True)
 
 class HousePicture(models.Model):
     applicationId = models.ForeignKey(Application, null=False, on_delete=models.CASCADE)
@@ -194,4 +191,15 @@ class IdPicture(models.Model):
 
 class CondoAgreement(models.Model):
     applicationId = models.ForeignKey(Application, null=False, on_delete=models.CASCADE)
-    condoAgreement = models.FileField(upload_to='static/application_files', null=True, blank=True)
+    condoAgreement = models.ImageField(upload_to='static/application_pics', null=True, blank=True)
+
+class AdoptedAnimals(models.Model):
+    pet = models.ForeignKey(Pet, null=False, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, null=False, on_delete=models.CASCADE)
+    date_adopted = models.DateTimeField(default=timezone.now)
+
+class CompletionForm(models.Model):
+    applicationId = models.ForeignKey(Application, null=False, on_delete=models.CASCADE)
+    user = models.ForeignKey(Users, null=False, on_delete=models.CASCADE)
+    follow_up = models.DateTimeField(null=False)
+    agree = models.BooleanField()

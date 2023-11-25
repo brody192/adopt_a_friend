@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'donation',
     'django_social_share',
     'chat',
-    'testimonials'
+    'testimonials',
+    'reports'
 ]
 
 MIDDLEWARE = [
@@ -76,14 +77,21 @@ WSGI_APPLICATION = 'adopt_a_friend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'fc1AbfGD1afb*c14C64a2dE63AcffF23',
-        'HOST': 'monorail.proxy.rlwy.net',
-        'PORT': '15663',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'railway',
+#         'USER': 'postgres',
+#         'PASSWORD': 'fc1AbfGD1afb*c14C64a2dE63AcffF23',
+#         'HOST': 'monorail.proxy.rlwy.net',
+#         'PORT': '15663',
+#     }
+# }
 
 # # settings.py
 

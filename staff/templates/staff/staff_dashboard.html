@@ -33,17 +33,101 @@
     </a>
 </div>
 
-<div class="mt-16 mb-16 h-72 mx-40 py-12 px-20 bg-white rounded-3xl relative shadow-lg grid grid-cols-4 gap-x-6 h-auto" style="font-family: 'Imprima';">
-    <div class="col-span-3">
-        <h1 class="text-4xl font-bold">News</h1>
+<div class="mt-16 mb-16 h-96 mx-40 py-12 px-20 bg-white rounded-3xl relative shadow-lg overflow-auto grid grid-cols-3 gap-x-6 h-auto" style="font-family: 'Imprima';">
+    <div class="">
+        <h1 class="text-2xl font-bold">New Applications</h1>
         <p class="border-b-2 my-3 border-black"></p>
+        {% for application in new_and_unaccessed_applications %}
+        <div class="h-full bg-gray-200 rounded-xl" style="background-image: url('{{ application.user.image.url }}'); background-size: cover;"></div>
+        <div class="ml-5 flex flex-col">
+        {% if application.status == "Pending" %}
+            <div class="bg-yellow-500 rounded-md text-gray-600 py-2 px-5">
+                <h1 class="text-white font-bold text-center">Pending</h1>
+            </div>
+        {% elif application.status == "On Hold" %}
+            <div class="bg-blue-500 rounded-md text-gray-600 py-2 px-5">
+                <h1 class="text-white font-bold text-center">On Hold</h1>
+            </div>
+        {% elif application.status == "Accepted" %}
+            <div class="bg-green-700 rounded-md text-gray-600 py-2 px-5">
+                <h1 class="text-white font-bold text-center">Accepted</h1>
+            </div>
+        {% elif application.status == "Rejected" %}
+            <div class="bg-red-500 rounded-md text-gray-600 py-2 px-5">
+                <h1 class="text-white font-bold text-center">Rejected</h1>
+            </div>
+        {% elif application.status == "Interviewing" %}
+            <div class="bg-purple-500 rounded-md text-gray-600 py-2 px-5">
+                <h1 class="text-white font-bold text-center">Interviewing</h1>
+            </div>
+        {% elif application.status == "Evaluating" %}
+            <div class="bg-indigo-500 rounded-md text-gray-600 py-2 px-5">
+                <h1 class="text-white font-bold text-center">Evaluating</h1>
+            </div>
+        {% elif application.status == "Completed" %}
+            <div class="bg-gray-500 rounded-md text-gray-600 py-2 px-5">
+                <h1 class="text-white font-bold text-center">Completed</h1>
+            </div>
+        {% endif %}
+                <div class="my-4 flex flex-col justify-between">
+                    <h1 class=""><b> Application ID: </b>{{application.applicationId}}</h1>
+                    <h1 class=""><b> Applicant: </b>{{ application.adopterFirstName }} {{ application.adopteeLastName }}</h1>
+                    <h1 class=""><b> Adoptee: </b>{{ application.pet.petName }}</h1>
+                    <h1 class=""><b> Contact Number: </b>{{ application.adopterContactNum }}</h1>
+                </div>
+                {% if application.status == "Completed"%}
+                    <div class="flex justify-end">
+                        <div class="py-2 px-3 border-green-700 border-2 rounded-md text-gray-600 hover:scale-110 duration-200 hover:cursor-pointer">
+                            <a href="{% url 'chat' applicationId=application.applicationId %}">
+                                <div class="flex gap-2">
+                                    <button class="text-sm text-green-700">Contact Adopter</button> 
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="flex justify-end">
+                        <div class="py-2 px-3 border-green-700 border-2 rounded-md text-gray-600 hover:scale-110 duration-200 hover:cursor-pointer">
+                            <a href="{% url 'review_application' application_id=application.applicationId %}">
+                                <div class="flex gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 text-green-700" viewBox="0 0 16 16"><path fill="currentColor" fill-rule="evenodd" d="M9 2.5a1 1 0 1 1-2 0a1 1 0 0 1 2 0Zm1.45-.5a2.5 2.5 0 0 0-4.9 0H3a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-2.55ZM8 5H5.5V3.5h-2v11h9v-11h-2V5H8ZM5 7.75A.75.75 0 0 1 5.75 7h4.5a.75.75 0 0 1 0 1.5h-4.5A.75.75 0 0 1 5 7.75Zm.75 1.75a.75.75 0 0 0 0 1.5h4.5a.75.75 0 0 0 0-1.5h-4.5Z" clip-rule="evenodd"/></svg>
+                                    <button class="font-semibold text-sm text-green-700">Review</button> 
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
     </div>
     <div class="">
-        <h1 class="text-4xl font-bold">Messages</h1>
+        <h1 class="text-2xl font-bold">Pending Interviews</h1>
+        <p class="border-b-2 my-3 border-black"></p>
+        {% for application in interviewing_applications %}
+        <div class="my-6">
+            <a href="{% url 'lobby' applicationId=application.applicationId %}">
+                <div class="w-full h-40 rounded-xl shadow-lg border">
+                    <div class="">
+                        <p class="pl-5 pt-4 text-xl font-bold">{{ application.adopterFirstName }} {{ application.adopterLastName }}</p>
+                        <p class="pl-5">{{ application.pet.petName }}</p>
+                        <p class="pl-5">{{ application.applicationId }}</p>
+                        {% for interview in application.interview_set.all %}
+                        <p class="pl-5">Date: {{ interview.interviewDate }}</p>
+                        <p class="pl-5">Time: {{ interview.interviewTime }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="">
+        <h1 class="text-2xl font-bold">Messages</h1>
         <p class="border-b-2 my-3 border-black"></p>
         {% for application in completed_applications %}
             <a href="{% url 'chat' applicationId=application.applicationId %}">
-                <div class="w-full h-28 rounded-xl shadow-lg" style="background-color: #f89651;">
+                <div class="w-full h-28 rounded-xl shadow-lg border" style="background-color: #f89651;">
                     <div class="text-white">
                         <p class="pl-5 pt-4 text-xl font-bold">{{ application.adopteeFirstName }} {{ application.adopteeLastName }}</p>
                         <p class="pl-5">{{ application.pet.petName }}</p>

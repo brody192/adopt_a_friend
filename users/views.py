@@ -11,6 +11,8 @@ import os
 from pets.models import Application
 from django.conf import settings
 from django.views.decorators.cache import cache_page
+from django.utils import timezone
+from datetime import timedelta
 
 # Create your views here.
 
@@ -114,4 +116,3 @@ def update_profile(request, slug, id):
     }
 
     return render(request, 'users/update_profile.html', context)
-

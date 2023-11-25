@@ -19,17 +19,31 @@ from reportlab.lib.enums import TA_CENTER
 from PIL import Image
 from django.http import FileResponse
 import io
+from datetime import datetime, timedelta
 from django.views.decorators.cache import cache_page
 
 # Create your views here.
 
 @staff_required
 def staff_dashboard(request):
-    # Retrieve completed applications
-    completed_applications = Application.objects.filter(status='Completed')
+    # Retrieve interviewing applications and sort by interviewDate
+    interviewing_applications = (
+        Application.objects
+        .filter(status='Interviewing', interview__isnull=False)
+        .order_by('interview__interviewDate')
+    )
 
-    # Pass the completed applications to the template
-    return render(request, 'staff/staff_dashboard.html', {'completed_applications': completed_applications})
+    unaccessed_threshold = datetime.now() - timedelta(days=7)
+
+    # Retrieve new and unaccessed applications and sort by created_at
+    new_and_unaccessed_applications = (
+        Application.objects
+        .filter(status='Pending', last_accessed_at__lte=unaccessed_threshold)
+        .order_by('-created_at')
+    )
+
+    # Pass the interviewing applications to the template
+    return render(request, 'staff/staff_dashboard.html', {'interviewing_applications': interviewing_applications, 'new_and_unaccessed_applications': new_and_unaccessed_applications})
 
 @staff_required
 def staff_application_dashboard(request):
@@ -220,311 +234,52 @@ def delete_campaign(request, campaign_id):
 
     return JsonResponse({'message': 'Invalid request method.'}, status=400)
 
-@staff_required 
+# views.py
+@staff_required
 def review_application(request, application_id):
     application = get_object_or_404(Application, applicationId=application_id)
+    
+    # Check if an interview already exists for the application
+    interview = application.interview_set.first()
+    interview_form = InterviewForm(instance=interview) if interview else InterviewForm()
+
+    # Check if a turnover already exists for the application
+    turnover = application.turnover_set.first()
+    turnover_form = TurnoverForm(instance=turnover) if turnover else TurnoverForm()
+
+    status_form = StatusForm(instance=application)
 
     if request.method == 'POST':
-        form = ReviewApplicationForm(request.POST, instance=application)
-        if form.is_valid():
-            form.save()
+        interview_form = InterviewForm(request.POST, instance=interview)
+        status_form = StatusForm(request.POST, instance=application)
+        turnover_form = TurnoverForm(request.POST, instance=turnover)
+
+        if interview_form.is_valid() and status_form.is_valid() and turnover_form.is_valid():
+            interview = interview_form.save(commit=False)
+            interview.application = application
+            interview.interviewedBy = request.user
+            interview.save()
+
+            status_instance = status_form.save(commit=False)
+            status_instance.save()
+
+            turnover = turnover_form.save(commit=False)
+            turnover.application = application
+            turnover.save()
+
+            # Check if the application status is set to "Completed"
+            if status_instance.status == 'Completed':
+                # Create an AdoptedAnimals object
+                adopted_animal = AdoptedAnimals(pet=application.pet, user=application.user)
+                adopted_animal.save()
+
             return redirect('staff_application_dashboard')
 
-    else:
-        form = ReviewApplicationForm(instance=application)
+    context = {
+        'application': application,
+        'interview_form': interview_form,
+        'status_form': status_form,
+        'turnover_form': turnover_form,
+    }
 
-    context = {'form': form, 'application': application}
     return render(request, 'staff/review_application.html', context)
-
-
-def generate_campaign_data_pdf(request):
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="pet_data_report.pdf"'
-    buffer = BytesIO()
-    pdf_doc = SimpleDocTemplate(buffer, pagesize=landscape(legal))
-
-    title_for_pets = "Pet Information"
-    title_for_medical = "Pet Medical Information"
-    report_title = "Pet Report"
-    report_description = "This file contains a comprehensive report about the information of pets along with their medical information. The information listed below are from the adoptable pets in Quezon City Animal Care and Adoption Center's animal shelter."
-    system_generated_report = "This is a system generated report."
-
-    #PET
-    pet_data = []
-    pet_data.append([
-        'Pet ID',
-        'Pet Name',
-        'Animal Type',
-        'Breed',
-        'Pet Age',
-        'Pet Gender',
-        'Pet Size',
-        'Pet Color',
-        'Pet Personality',
-        'Date Acquired',
-        'Is the Pet Trained?'
-    ])
-
-    for pet in Pet.objects.all():
-        pet_data.append([
-            pet.petId,
-            pet.petName,
-            pet.animalType,
-            pet.breed,
-            pet.petAge,
-            pet.petGender,
-            pet.petSize,
-            pet.petColor,
-            pet.petPersonality,
-            pet.dateAcquired,
-            pet.isTrained,
-        ])
-
-    
-    #PET MEDICAL
-    pet_medical_data = []
-
-    pet_medical_data.append([
-        'Pet Name',
-        'Weight',
-        'Is the Pet Vaccinated?',
-        'Is the Pet Neutured/Spayed?',
-        'Health Condition',
-        'Disease'
-    ])
-
-    for pet_medical in PetMedical.objects.all():
-        pet_medical_data.append([
-            pet_medical.petId.petName,
-            pet_medical.petWeight,
-            pet_medical.isVaccinated,
-            pet_medical.isNeutered_or_Spayed,
-            pet_medical.healthCondition,
-            pet_medical.disease,
-        ])
-    
-    pet_table = create_table(pet_data, Pet._meta.fields, "Pet Data")
-    pet_medical_table = create_table(pet_medical_data, PetMedical._meta.fields, "Pet Medical Data")
-
-    styles = getSampleStyleSheet()
-    normal_style = styles['Normal']
-    
-    # Create a style with center alignment
-    center_style = ParagraphStyle(
-        'Centered',
-        parent=normal_style,
-        alignment=TA_CENTER,
-        fontSize = 14,
-        spaceBefore=50,  # Adjust the top padding
-        spaceAfter=30    # Adjust the bottom padding
-    )
-
-    style_for_report_title = ParagraphStyle(
-        'Centered',
-        fontSize = 30,
-        parent=normal_style,
-        spaceBefore=0,  # Adjust the top padding
-        spaceAfter=30    # Adjust the bottom padding
-    )
-
-    style_for_report_description = ParagraphStyle(
-        'Centered',
-        fontSize = 12,
-        parent=normal_style,
-        spaceBefore=0,  # Adjust the top padding
-        spaceAfter=30,    # Adjust the bottom padding
-    )
-
-    style_for_system_generated_message = ParagraphStyle(
-        'Centered',
-        fontSize = 12,
-        parent=normal_style,
-        spaceBefore=50,  # Adjust the top padding
-        spaceAfter=30,    # Adjust the bottom padding
-        alignment = TA_CENTER
-    )
-
-    centered_title_for_pets = Paragraph(title_for_pets, center_style)
-    centered_title_for_medical = Paragraph(title_for_medical, center_style)
-    report_title_title = Paragraph(report_title, style_for_report_title)
-    description = Paragraph(report_description, style_for_report_description)
-    system_generated_message = Paragraph(system_generated_report, style_for_system_generated_message)
-
-    pdf_elements = [report_title_title, description ,centered_title_for_pets, pet_table, centered_title_for_medical, pet_medical_table, system_generated_message]
-    pdf_doc.build(pdf_elements)
-
-    pdf_value = buffer.getvalue()
-    buffer.close()
-    response.write(pdf_value)
-
-    return response
-
-def generate_pet_data_pdf(request):
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="pet_data_report.pdf"'
-    buffer = BytesIO()
-    pdf_doc = SimpleDocTemplate(buffer, pagesize=landscape(legal))
-
-    title_for_pets = "Pet Information"
-    title_for_medical = "Pet Medical Information"
-    report_title = "Pet Report"
-    report_description = "This file contains a comprehensive report about the information of pets along with their medical information. The information listed below are from the adoptable pets in Quezon City Animal Care and Adoption Center's animal shelter."
-    system_generated_report = "This is a system generated report."
-
-    #PET
-    pet_data = []
-    pet_data.append([
-        'Pet ID',
-        'Pet Name',
-        'Animal Type',
-        'Breed',
-        'Pet Age',
-        'Pet Gender',
-        'Pet Size',
-        'Pet Color',
-        'Pet Personality',
-        'Date Acquired',
-        'Is the Pet Trained?'
-    ])
-
-    for pet in Pet.objects.all():
-        pet_data.append([
-            pet.petId,
-            pet.petName,
-            pet.animalType,
-            pet.breed,
-            pet.petAge,
-            pet.petGender,
-            pet.petSize,
-            pet.petColor,
-            pet.petPersonality,
-            pet.dateAcquired,
-            pet.isTrained,
-        ])
-
-    
-    #PET MEDICAL
-    pet_medical_data = []
-
-    pet_medical_data.append([
-        'Pet Name',
-        'Weight',
-        'Is the Pet Vaccinated?',
-        'Is the Pet Neutured/Spayed?',
-        'Health Condition',
-        'Disease'
-    ])
-
-    for pet_medical in PetMedical.objects.all():
-        pet_medical_data.append([
-            pet_medical.petId.petName,
-            pet_medical.petWeight,
-            pet_medical.isVaccinated,
-            pet_medical.isNeutered_or_Spayed,
-            pet_medical.healthCondition,
-            pet_medical.disease,
-        ])
-    
-    pet_table = create_table(pet_data, Pet._meta.fields, "Pet Data")
-    pet_medical_table = create_table(pet_medical_data, PetMedical._meta.fields, "Pet Medical Data")
-
-    styles = getSampleStyleSheet()
-    normal_style = styles['Normal']
-    
-    # Create a style with center alignment
-    center_style = ParagraphStyle(
-        'Centered',
-        parent=normal_style,
-        alignment=TA_CENTER,
-        fontSize = 14,
-        spaceBefore=50,  # Adjust the top padding
-        spaceAfter=30    # Adjust the bottom padding
-    )
-
-    style_for_report_title = ParagraphStyle(
-        'Centered',
-        fontSize = 30,
-        parent=normal_style,
-        spaceBefore=0,  # Adjust the top padding
-        spaceAfter=30    # Adjust the bottom padding
-    )
-
-    style_for_report_description = ParagraphStyle(
-        'Centered',
-        fontSize = 12,
-        parent=normal_style,
-        spaceBefore=0,  # Adjust the top padding
-        spaceAfter=30,    # Adjust the bottom padding
-    )
-
-    style_for_system_generated_message = ParagraphStyle(
-        'Centered',
-        fontSize = 12,
-        parent=normal_style,
-        spaceBefore=50,  # Adjust the top padding
-        spaceAfter=30,    # Adjust the bottom padding
-        alignment = TA_CENTER
-    )
-
-    centered_title_for_pets = Paragraph(title_for_pets, center_style)
-    centered_title_for_medical = Paragraph(title_for_medical, center_style)
-    report_title_title = Paragraph(report_title, style_for_report_title)
-    description = Paragraph(report_description, style_for_report_description)
-    system_generated_message = Paragraph(system_generated_report, style_for_system_generated_message)
-
-    pdf_elements = [report_title_title, description ,centered_title_for_pets, pet_table, centered_title_for_medical, pet_medical_table, system_generated_message]
-    pdf_doc.build(pdf_elements)
-
-    pdf_value = buffer.getvalue()
-    buffer.close()
-    response.write(pdf_value)
-
-    return response
-
-def create_table(data, fields ,title):
-    # headers = [field.name for field in fields]
-    table_data = data
-    table = Table(table_data)
-    style = TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
-        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-        ('BOTTOMPADDING', (0, 0), (-1, 0), 14),
-        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
-    ])
-    table.setStyle(style)
-    return table
-
-def generate_application_report(request, application_id):
-    # Create a file-like buffer to receive PDF data.
-    buffer = io.BytesIO()
-
-    # Create the PDF object, using the buffer as its "file."
-    p = canvas.Canvas(buffer, pagesize=letter)
-
-    # Load the models
-    application = get_object_or_404(Application, applicationId=application_id)
-
-    # Draw the application details
-    p.drawString(270, 750, f'{application.adopteeFirstName} {application.adopteeLastName}')
-    p.drawString(270, 735, f'{application.applicationId}')
-    # ... add more details as needed
-
-    # Draw the application picture
-    image_path = application.picture.path
-    application_image = Image.open(image_path)
-    application_image = application_image.resize((150, 150))  # Force resize the image
-    p.drawInlineImage(application_image, 70, 610)
-
-    # Move to the next page
-    p.showPage()
-
-    # Close the PDF object cleanly, and we're done.
-    p.save()
-
-    # FileResponse sets the Content-Disposition header so that browsers
-    # present the option to save the file.
-    buffer.seek(0)
-    return FileResponse(buffer, as_attachment=True, filename=f'application_{application_id}.pdf')
-
