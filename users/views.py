@@ -17,7 +17,6 @@ from datetime import timedelta
 # Create your views here.
 
 @unauthenticated_user
-@cache_page(60 * 3)
 def create_user(request):
     if request.method == 'POST':
         form = UsersForm(request.POST)
@@ -65,7 +64,7 @@ def sent_email(request):
 
 @login_required
 def profile(request, slug, id):
-    user = get_object_or_404(Users, slug=slug)
+    user = get_object_or_404(Users, slug=slug, id=id)
 
     try:
         adopter = Users.objects.get(pk=id)

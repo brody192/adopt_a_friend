@@ -23,7 +23,7 @@
 </div>
 
 <div class="relative mt-36 pb-12 rounded-3xl px-80" style="background-color: #E9E9E9;">
-    <form method="POST" action="{% url 'signup' %}" class="py-10 grid grid-cols-2 gap-x-14 gap-y-4" style="font-family: 'Imprima', sans-serif; font-size: 1.1rem;">
+    <form method="POST" action="{% url 'signup' %}" enctype="multipart/form-data" class="py-10 grid grid-cols-2 gap-x-14 gap-y-4" style="font-family: 'Imprima', sans-serif; font-size: 1.1rem;">
         {% csrf_token %}
 
         <!-- USER FORM -->
