@@ -1,2 +1,2 @@
 [phases.setup]
-aptPkgs = ["...", "libcairo2-dev", "pkg-config", "python3-dev", "libx11-dev", "libxcb-util0-dev", "libxcb-keysyms1-dev","libxinerama-dev", "libxft-dev", "libx11-xcb-dev", "libxcb-res0-dev"]
+aptPkgs = ["...", "libcairo2-dev", "pkg-config", "python3-dev", "libx11-dev", "libxcb-util0-dev", "libxcb-keysyms1-dev","libxinerama-dev", "libxft-dev", "libx11-xcb-dev", "libxcb-res0-dev", "libxcb1-dev"]
